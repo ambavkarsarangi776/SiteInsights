@@ -1,5 +1,5 @@
 {
-  "nextScanId": 15,
+  "nextScanId": 17,
   "sites": {
     "https://example.com": {
       "id": 1,
@@ -28,9 +28,92 @@
       "scanCount": 4,
       "lastScore": 75,
       "lastScanAt": "2026-10-24T16:43:36.598Z"
+    },
+    "https://gov.uk": {
+      "id": 5,
+      "url": "https://gov.uk",
+      "scanCount": 2,
+      "lastScore": 87,
+      "lastScanAt": "2026-10-24T17:44:42.176Z"
     }
   },
   "scans": [
+    {
+      "id": 16,
+      "site_id": 5,
+      "url": "https://gov.uk",
+      "strategy": "desktop",
+      "score": 87,
+      "fcp_ms": 631,
+      "lcp_ms": 631,
+      "tbt_ms": 4,
+      "cls": 0.248,
+      "speed_index_ms": 631,
+      "total_bytes": 211759,
+      "issues": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 0,
+          "displayValue": "Est savings of 26 KiB",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "savingsMs": 0,
+          "displayValue": "Est savings of 39 KiB",
+          "tip": {
+            "problem": "Your stylesheets include CSS rules that do not style any element on the current page.",
+            "fix": "Remove dead CSS rules or split your stylesheet into page-specific CSS files.",
+            "example": "Avoid loading an entire CSS framework across every page if only a few utility classes are needed."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T17:44:42.176Z"
+    },
+    {
+      "id": 15,
+      "site_id": 5,
+      "url": "https://gov.uk",
+      "strategy": "desktop",
+      "score": 87,
+      "fcp_ms": 631,
+      "lcp_ms": 631,
+      "tbt_ms": 4,
+      "cls": 0.248,
+      "speed_index_ms": 631,
+      "total_bytes": 211759,
+      "issues": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 0,
+          "displayValue": "Est savings of 26 KiB",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "savingsMs": 0,
+          "displayValue": "Est savings of 39 KiB",
+          "tip": {
+            "problem": "Your stylesheets include CSS rules that do not style any element on the current page.",
+            "fix": "Remove dead CSS rules or split your stylesheet into page-specific CSS files.",
+            "example": "Avoid loading an entire CSS framework across every page if only a few utility classes are needed."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T17:44:42.174Z"
+    },
     {
       "id": 14,
       "site_id": 4,
