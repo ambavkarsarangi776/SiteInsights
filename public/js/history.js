@@ -154,7 +154,7 @@ async function selectSite(url, rowElement) {
     scans.forEach((scan) => {
       const scoreNum = Number(scan.score || 0);
       const scoreRating = getScoreRating(scoreNum);
-      const strategyText = scan.strategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+      const strategyText = scan.strategy === 'desktop' ? 'Desktop' : 'Mobile';
       const lcpFormatted = scan.lcp_ms !== null ? `${Number(scan.lcp_ms).toLocaleString()} ms` : '--';
 
       const scanRow = document.createElement('tr');

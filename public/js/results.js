@@ -57,7 +57,7 @@ function renderReport(report) {
   
   const strategy = report.strategy || 'mobile';
   const strategyBadge = document.getElementById('badge-strategy');
-  strategyBadge.textContent = strategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+  strategyBadge.textContent = strategy === 'desktop' ? 'Desktop' : 'Mobile';
   strategyBadge.className = `badge badge-${strategy}`;
 
   const cachedBadge = document.getElementById('badge-cached');
@@ -72,7 +72,7 @@ function renderReport(report) {
   // Setup Compare Strategy Button
   const compareBtn = document.getElementById('compare-btn');
   const targetOther = strategy === 'mobile' ? 'desktop' : 'mobile';
-  compareBtn.textContent = `⚡ Compare with ${targetOther === 'desktop' ? 'Desktop' : 'Mobile'}`;
+  compareBtn.textContent = `Compare with ${targetOther === 'desktop' ? 'Desktop' : 'Mobile'}`;
   compareBtn.onclick = () => runStrategyComparison(targetOther);
 
   // Score Gauge & 4-Tier Doctor's Verdict
@@ -155,7 +155,7 @@ function renderReport(report) {
     issuesHeader.textContent = "Doctor's Prescriptions (All Clear)";
     issuesList.innerHTML = `
       <div class="empty-state">
-        <h3>🎉 No Critical Issues Found!</h3>
+        <h3>No Critical Issues Found!</h3>
         <p>All core performance audits passed with high scores. Your website follows top speed practices.</p>
       </div>
     `;
@@ -181,19 +181,19 @@ function renderReport(report) {
     card.innerHTML = `
       <div class="issue-header">
         <h4 class="issue-title">${escapeHtml(issue.title)}</h4>
-        <span class="issue-savings">⚡ ${escapeHtml(savingsText)}</span>
+        <span class="issue-savings">${escapeHtml(savingsText)}</span>
       </div>
       <div class="issue-body">
         <div class="tip-block">
-          <span class="tip-label">🚨 Symptom (The Problem)</span>
+          <span class="tip-label">Symptom (The Problem)</span>
           <p class="tip-text">${escapeHtml(tip.problem)}</p>
         </div>
         <div class="tip-block">
-          <span class="tip-label">💊 Prescription (The Fix)</span>
+          <span class="tip-label">Prescription (The Fix)</span>
           <p class="tip-text">${escapeHtml(tip.fix)}</p>
         </div>
         <div class="tip-block tip-example">
-          <span class="tip-label">💡 Concrete Example</span>
+          <span class="tip-label">Concrete Example</span>
           <code>${escapeHtml(tip.example)}</code>
         </div>
       </div>
@@ -241,15 +241,15 @@ async function checkBeforeAfterComparison(report) {
 
       if (diff > 0) {
         baBanner.className = 'before-after-banner good';
-        baIcon.textContent = '🚀';
+        baIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`;
         baText.textContent = `Score improved from ${prevScore} to ${curScore} (+${diff})`;
       } else if (diff < 0) {
         baBanner.className = 'before-after-banner poor';
-        baIcon.textContent = '⚠️';
+        baIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
         baText.textContent = `Score dropped from ${prevScore} to ${curScore} (${diff})`;
       } else {
         baBanner.className = 'before-after-banner neutral';
-        baIcon.textContent = '⚖️';
+        baIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
         baText.textContent = `Score unchanged from earlier scan at ${curScore} / 100`;
       }
     }
@@ -284,14 +284,14 @@ async function runStrategyComparison(otherStrategy) {
     const othScore = Math.round(otherReport.score || 0);
     const curStrat = currentReport.strategy || 'mobile';
 
-    document.getElementById('label-current').textContent = curStrat === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+    document.getElementById('label-current').textContent = curStrat === 'desktop' ? 'Desktop' : 'Mobile';
     document.getElementById('score-current').textContent = curScore;
     const badgeCur = document.getElementById('badge-current');
     const curRating = currentReport.rating || (curScore >= 90 ? 'excellent' : curScore >= 70 ? 'good' : curScore >= 50 ? 'needs-work' : 'poor');
     badgeCur.textContent = formatRatingText(curRating);
     badgeCur.className = `badge ${curRating}`;
 
-    document.getElementById('label-other').textContent = otherStrategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+    document.getElementById('label-other').textContent = otherStrategy === 'desktop' ? 'Desktop' : 'Mobile';
     document.getElementById('score-other').textContent = othScore;
     const badgeOth = document.getElementById('badge-other');
     const othRating = otherReport.rating || (othScore >= 90 ? 'excellent' : othScore >= 70 ? 'good' : othScore >= 50 ? 'needs-work' : 'poor');
@@ -302,20 +302,20 @@ async function runStrategyComparison(otherStrategy) {
     const diff = othScore - curScore;
     const otherName = otherStrategy === 'desktop' ? 'Desktop' : 'Mobile';
     if (diff > 0) {
-      compareDiff.textContent = `📈 ${otherName} score is +${diff} points higher`;
+      compareDiff.textContent = `${otherName} score is +${diff} points higher`;
       compareDiff.className = 'compare-diff-pill good';
     } else if (diff < 0) {
-      compareDiff.textContent = `📉 ${otherName} score is ${diff} points lower`;
+      compareDiff.textContent = `${otherName} score is ${diff} points lower`;
       compareDiff.className = 'compare-diff-pill poor';
     } else {
-      compareDiff.textContent = `⚖️ Both Mobile and Desktop scored the same (${curScore}/100)`;
+      compareDiff.textContent = `Both Mobile and Desktop scored the same (${curScore}/100)`;
       compareDiff.className = 'compare-diff-pill neutral';
     }
 
     compareStatus.textContent = 'Side-by-side comparison complete:';
     compareGrid.classList.remove('hidden');
     compareDiff.classList.remove('hidden');
-    compareBtn.textContent = '✓ Compared';
+    compareBtn.textContent = 'Compared';
   } catch (err) {
     compareStatus.textContent = `Could not complete comparison: ${err.message}`;
     compareBtn.disabled = false;

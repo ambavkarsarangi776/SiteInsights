@@ -1,5 +1,5 @@
 {
-  "nextScanId": 3,
+  "nextScanId": 15,
   "sites": {
     "https://example.com": {
       "id": 1,
@@ -7,9 +7,458 @@
       "scanCount": 2,
       "lastScore": 100,
       "lastScanAt": "2026-10-24T15:44:18.148Z"
+    },
+    "https://wikipedia.org": {
+      "id": 2,
+      "url": "https://wikipedia.org",
+      "scanCount": 4,
+      "lastScore": 90,
+      "lastScanAt": "2026-10-24T16:08:27.707Z"
+    },
+    "https://www.google.com": {
+      "id": 3,
+      "url": "https://www.google.com",
+      "scanCount": 4,
+      "lastScore": 53,
+      "lastScanAt": "2026-10-24T16:05:41.999Z"
+    },
+    "https://chatgpt.com": {
+      "id": 4,
+      "url": "https://chatgpt.com",
+      "scanCount": 4,
+      "lastScore": 75,
+      "lastScanAt": "2026-10-24T16:43:36.598Z"
     }
   },
   "scans": [
+    {
+      "id": 14,
+      "site_id": 4,
+      "url": "https://chatgpt.com",
+      "strategy": "mobile",
+      "score": 75,
+      "fcp_ms": 2512,
+      "lcp_ms": 4212,
+      "tbt_ms": 392,
+      "cls": 0.12,
+      "speed_index_ms": 3954,
+      "total_bytes": 1751112,
+      "issues": [
+        {
+          "id": "uses-optimized-images",
+          "title": "Efficiently encode images",
+          "savingsMs": 1362,
+          "displayValue": "Potential savings of 1362 ms",
+          "tip": {
+            "problem": "Your images are larger than they need to be, so visitors download extra data.",
+            "fix": "Compress images and use modern formats like WebP or AVIF.",
+            "example": "Convert hero.jpg (3 MB) to hero.webp using squoosh.app, often 70% smaller."
+          }
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 832,
+          "displayValue": "Potential savings of 832 ms",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        },
+        {
+          "id": "modern-image-formats",
+          "title": "Serve images in modern formats",
+          "savingsMs": 652,
+          "displayValue": "Potential savings of 652 ms",
+          "tip": {
+            "problem": "Legacy image formats like JPEG and PNG take longer to download than modern compressed formats.",
+            "fix": "Serve images in modern WebP or AVIF formats for smaller file sizes without losing visual quality.",
+            "example": "Use the <picture> element to serve WebP or AVIF with a JPEG fallback."
+          }
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "savingsMs": 542,
+          "displayValue": "Potential savings of 542 ms",
+          "tip": {
+            "problem": "CSS and JavaScript files in the head of your page stop the browser from displaying content until they finish downloading.",
+            "fix": "Add the defer or async attribute to script tags, and inline critical above-the-fold CSS.",
+            "example": "Change <script src=\"app.js\"></script> to <script src=\"app.js\" defer></script>."
+          }
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "savingsMs": 292,
+          "displayValue": "Potential savings of 292 ms",
+          "tip": {
+            "problem": "Text files (HTML, CSS, JavaScript) are sent across the network uncompressed.",
+            "fix": "Enable Gzip or Brotli compression on your web server or CDN.",
+            "example": "In Node/Express, add the compression middleware (app.use(compression())) to shrink responses by up to 70%."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T16:43:36.598Z"
+    },
+    {
+      "id": 13,
+      "site_id": 4,
+      "url": "https://chatgpt.com",
+      "strategy": "mobile",
+      "score": 75,
+      "fcp_ms": 2512,
+      "lcp_ms": 4212,
+      "tbt_ms": 392,
+      "cls": 0.12,
+      "speed_index_ms": 3954,
+      "total_bytes": 1751112,
+      "issues": [
+        {
+          "id": "uses-optimized-images",
+          "title": "Efficiently encode images",
+          "savingsMs": 1362,
+          "displayValue": "Potential savings of 1362 ms",
+          "tip": {
+            "problem": "Your images are larger than they need to be, so visitors download extra data.",
+            "fix": "Compress images and use modern formats like WebP or AVIF.",
+            "example": "Convert hero.jpg (3 MB) to hero.webp using squoosh.app, often 70% smaller."
+          }
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 832,
+          "displayValue": "Potential savings of 832 ms",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        },
+        {
+          "id": "modern-image-formats",
+          "title": "Serve images in modern formats",
+          "savingsMs": 652,
+          "displayValue": "Potential savings of 652 ms",
+          "tip": {
+            "problem": "Legacy image formats like JPEG and PNG take longer to download than modern compressed formats.",
+            "fix": "Serve images in modern WebP or AVIF formats for smaller file sizes without losing visual quality.",
+            "example": "Use the <picture> element to serve WebP or AVIF with a JPEG fallback."
+          }
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "savingsMs": 542,
+          "displayValue": "Potential savings of 542 ms",
+          "tip": {
+            "problem": "CSS and JavaScript files in the head of your page stop the browser from displaying content until they finish downloading.",
+            "fix": "Add the defer or async attribute to script tags, and inline critical above-the-fold CSS.",
+            "example": "Change <script src=\"app.js\"></script> to <script src=\"app.js\" defer></script>."
+          }
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "savingsMs": 292,
+          "displayValue": "Potential savings of 292 ms",
+          "tip": {
+            "problem": "Text files (HTML, CSS, JavaScript) are sent across the network uncompressed.",
+            "fix": "Enable Gzip or Brotli compression on your web server or CDN.",
+            "example": "In Node/Express, add the compression middleware (app.use(compression())) to shrink responses by up to 70%."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T16:43:36.597Z"
+    },
+    {
+      "id": 12,
+      "site_id": 4,
+      "url": "https://chatgpt.com",
+      "strategy": "desktop",
+      "score": 98,
+      "fcp_ms": 1712,
+      "lcp_ms": 2812,
+      "tbt_ms": 172,
+      "cls": 0.12,
+      "speed_index_ms": 2794,
+      "total_bytes": 1751112,
+      "issues": [],
+      "created_at": "2026-10-24T16:43:05.502Z"
+    },
+    {
+      "id": 11,
+      "site_id": 4,
+      "url": "https://chatgpt.com",
+      "strategy": "desktop",
+      "score": 98,
+      "fcp_ms": 1712,
+      "lcp_ms": 2812,
+      "tbt_ms": 172,
+      "cls": 0.12,
+      "speed_index_ms": 2794,
+      "total_bytes": 1751112,
+      "issues": [],
+      "created_at": "2026-10-24T16:43:05.501Z"
+    },
+    {
+      "id": 10,
+      "site_id": 2,
+      "url": "https://wikipedia.org",
+      "strategy": "desktop",
+      "score": 90,
+      "fcp_ms": 522,
+      "lcp_ms": 682,
+      "tbt_ms": 217,
+      "cls": 0.003,
+      "speed_index_ms": 1791,
+      "total_bytes": 79649,
+      "issues": [],
+      "created_at": "2026-10-24T16:08:27.707Z"
+    },
+    {
+      "id": 9,
+      "site_id": 2,
+      "url": "https://wikipedia.org",
+      "strategy": "desktop",
+      "score": 90,
+      "fcp_ms": 522,
+      "lcp_ms": 682,
+      "tbt_ms": 217,
+      "cls": 0.003,
+      "speed_index_ms": 1791,
+      "total_bytes": 79649,
+      "issues": [],
+      "created_at": "2026-10-24T16:08:27.705Z"
+    },
+    {
+      "id": 8,
+      "site_id": 3,
+      "url": "https://www.google.com",
+      "strategy": "mobile",
+      "score": 53,
+      "fcp_ms": 2805,
+      "lcp_ms": 4505,
+      "tbt_ms": 465,
+      "cls": 0.05,
+      "speed_index_ms": 4272,
+      "total_bytes": 1751405,
+      "issues": [
+        {
+          "id": "uses-optimized-images",
+          "title": "Efficiently encode images",
+          "savingsMs": 1055,
+          "displayValue": "Potential savings of 1055 ms",
+          "tip": {
+            "problem": "Your images are larger than they need to be, so visitors download extra data.",
+            "fix": "Compress images and use modern formats like WebP or AVIF.",
+            "example": "Convert hero.jpg (3 MB) to hero.webp using squoosh.app, often 70% smaller."
+          }
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 675,
+          "displayValue": "Potential savings of 675 ms",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "savingsMs": 485,
+          "displayValue": "Potential savings of 485 ms",
+          "tip": {
+            "problem": "CSS and JavaScript files in the head of your page stop the browser from displaying content until they finish downloading.",
+            "fix": "Add the defer or async attribute to script tags, and inline critical above-the-fold CSS.",
+            "example": "Change <script src=\"app.js\"></script> to <script src=\"app.js\" defer></script>."
+          }
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "savingsMs": 405,
+          "displayValue": "Potential savings of 405 ms",
+          "tip": {
+            "problem": "Text files (HTML, CSS, JavaScript) are sent across the network uncompressed.",
+            "fix": "Enable Gzip or Brotli compression on your web server or CDN.",
+            "example": "In Node/Express, add the compression middleware (app.use(compression())) to shrink responses by up to 70%."
+          }
+        },
+        {
+          "id": "modern-image-formats",
+          "title": "Serve images in modern formats",
+          "savingsMs": 385,
+          "displayValue": "Potential savings of 385 ms",
+          "tip": {
+            "problem": "Legacy image formats like JPEG and PNG take longer to download than modern compressed formats.",
+            "fix": "Serve images in modern WebP or AVIF formats for smaller file sizes without losing visual quality.",
+            "example": "Use the <picture> element to serve WebP or AVIF with a JPEG fallback."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T16:05:41.999Z"
+    },
+    {
+      "id": 7,
+      "site_id": 3,
+      "url": "https://www.google.com",
+      "strategy": "mobile",
+      "score": 53,
+      "fcp_ms": 2805,
+      "lcp_ms": 4505,
+      "tbt_ms": 465,
+      "cls": 0.05,
+      "speed_index_ms": 4272,
+      "total_bytes": 1751405,
+      "issues": [
+        {
+          "id": "uses-optimized-images",
+          "title": "Efficiently encode images",
+          "savingsMs": 1055,
+          "displayValue": "Potential savings of 1055 ms",
+          "tip": {
+            "problem": "Your images are larger than they need to be, so visitors download extra data.",
+            "fix": "Compress images and use modern formats like WebP or AVIF.",
+            "example": "Convert hero.jpg (3 MB) to hero.webp using squoosh.app, often 70% smaller."
+          }
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 675,
+          "displayValue": "Potential savings of 675 ms",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "savingsMs": 485,
+          "displayValue": "Potential savings of 485 ms",
+          "tip": {
+            "problem": "CSS and JavaScript files in the head of your page stop the browser from displaying content until they finish downloading.",
+            "fix": "Add the defer or async attribute to script tags, and inline critical above-the-fold CSS.",
+            "example": "Change <script src=\"app.js\"></script> to <script src=\"app.js\" defer></script>."
+          }
+        },
+        {
+          "id": "uses-text-compression",
+          "title": "Enable text compression",
+          "savingsMs": 405,
+          "displayValue": "Potential savings of 405 ms",
+          "tip": {
+            "problem": "Text files (HTML, CSS, JavaScript) are sent across the network uncompressed.",
+            "fix": "Enable Gzip or Brotli compression on your web server or CDN.",
+            "example": "In Node/Express, add the compression middleware (app.use(compression())) to shrink responses by up to 70%."
+          }
+        },
+        {
+          "id": "modern-image-formats",
+          "title": "Serve images in modern formats",
+          "savingsMs": 385,
+          "displayValue": "Potential savings of 385 ms",
+          "tip": {
+            "problem": "Legacy image formats like JPEG and PNG take longer to download than modern compressed formats.",
+            "fix": "Serve images in modern WebP or AVIF formats for smaller file sizes without losing visual quality.",
+            "example": "Use the <picture> element to serve WebP or AVIF with a JPEG fallback."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T16:05:41.994Z"
+    },
+    {
+      "id": 6,
+      "site_id": 3,
+      "url": "https://www.google.com",
+      "strategy": "desktop",
+      "score": 89,
+      "fcp_ms": 249,
+      "lcp_ms": 287,
+      "tbt_ms": 272,
+      "cls": 0.004,
+      "speed_index_ms": 480,
+      "total_bytes": 1610775,
+      "issues": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 0,
+          "displayValue": "Est savings of 565 KiB",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T16:04:38.312Z"
+    },
+    {
+      "id": 5,
+      "site_id": 3,
+      "url": "https://www.google.com",
+      "strategy": "desktop",
+      "score": 89,
+      "fcp_ms": 249,
+      "lcp_ms": 287,
+      "tbt_ms": 272,
+      "cls": 0.004,
+      "speed_index_ms": 480,
+      "total_bytes": 1610775,
+      "issues": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 0,
+          "displayValue": "Est savings of 565 KiB",
+          "tip": {
+            "problem": "Your page downloads JavaScript code that is never actually executed on the page.",
+            "fix": "Split large script bundles into smaller files and import libraries only where needed.",
+            "example": "Instead of importing an entire 500 KB utility library, import only the specific functions you use."
+          }
+        }
+      ],
+      "created_at": "2026-10-24T16:04:38.309Z"
+    },
+    {
+      "id": 4,
+      "site_id": 2,
+      "url": "https://wikipedia.org",
+      "strategy": "desktop",
+      "score": 96,
+      "fcp_ms": 620,
+      "lcp_ms": 821,
+      "tbt_ms": 124,
+      "cls": 0.001,
+      "speed_index_ms": 1389,
+      "total_bytes": 79632,
+      "issues": [],
+      "created_at": "2026-10-24T15:47:18.615Z"
+    },
+    {
+      "id": 3,
+      "site_id": 2,
+      "url": "https://wikipedia.org",
+      "strategy": "desktop",
+      "score": 96,
+      "fcp_ms": 620,
+      "lcp_ms": 821,
+      "tbt_ms": 124,
+      "cls": 0.001,
+      "speed_index_ms": 1389,
+      "total_bytes": 79632,
+      "issues": [],
+      "created_at": "2026-10-24T15:47:18.612Z"
+    },
     {
       "id": 2,
       "site_id": 1,
