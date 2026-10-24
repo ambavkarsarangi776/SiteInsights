@@ -33,10 +33,10 @@
   --shadow-hub: 0 20px 45px -8px rgba(0, 0, 0, 0.12), inset 0 1px 0 #ffffff;
   --shadow-canvas: 0 20px 60px -10px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
   --radius-pill: 9999px;
 }
 
@@ -449,7 +449,7 @@ body {
   width: 100%;
   height: 260px;
   background: #fafafc;
-  border-radius: 28px;
+  border-radius: 2px;
   border: 1px solid #edf0f4;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
@@ -646,7 +646,7 @@ body {
   max-width: 330px;
   background: #ffffff;
   border: 1px solid #eef0f3;
-  border-radius: var(--radius-lg);
+  border-radius: 2px;
   padding: 1.75rem 1.6rem;
   display: flex;
   flex-direction: column;
@@ -676,7 +676,7 @@ body {
   width: 44px;
   height: 44px;
   background: #f8fafc;
-  border-radius: 12px;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -817,7 +817,7 @@ body {
 .score-card {
   background: #ffffff;
   padding: 3rem 2.5rem;
-  border-radius: 28px;
+  border-radius: 2px;
   border: 1px solid #eef0f3;
   box-shadow: var(--shadow-md);
   margin-bottom: 2.5rem;
