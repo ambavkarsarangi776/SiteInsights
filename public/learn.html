@@ -29,12 +29,6 @@
               <span>⚡</span>
             </div>
             <a href="learn.html" class="nav-item active">Learn</a>
-            <a href="https://github.com/ambavkarsarangi776/speed_doctor" target="_blank" rel="noopener noreferrer" class="nav-item">Docs ↗</a>
-          </div>
-
-          <div class="nav-meta">
-            <span class="live-dot"></span>
-            <span id="nav-live-time">12:56 PM</span>
           </div>
         </nav>
       </header>
@@ -43,9 +37,6 @@
       <main class="container">
         <!-- Hero Section -->
         <section class="hero">
-          <div class="hero-badge">
-            <span class="badge-sparkle">✦</span> Performance Education
-          </div>
           <h1 class="hero-title">
             Web performance &<br>
             Core Web Vitals <span class="hero-inline-badge">📖</span> guide.
@@ -214,16 +205,5 @@
     </div>
   </div>
 
-  <script>
-    function updateClock() {
-      const el = document.getElementById('nav-live-time');
-      if (el) {
-        const now = new Date();
-        el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      }
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-  </script>
 </body>
 </html>

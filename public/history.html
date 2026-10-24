@@ -31,12 +31,6 @@
               <span>⚡</span>
             </div>
             <a href="learn.html" class="nav-item">Learn</a>
-            <a href="https://github.com/ambavkarsarangi776/speed_doctor" target="_blank" rel="noopener noreferrer" class="nav-item">Docs ↗</a>
-          </div>
-
-          <div class="nav-meta">
-            <span class="live-dot"></span>
-            <span id="nav-live-time">12:56 PM</span>
           </div>
         </nav>
       </header>
@@ -45,9 +39,6 @@
       <main class="container">
         <!-- Hero Section -->
         <section class="hero">
-          <div class="hero-badge">
-            <span class="badge-sparkle">✦</span> Historical Telemetry
-          </div>
           <h1 class="hero-title">
             Website scan history &<br>
             performance <span class="hero-inline-badge">📈</span> trends.
@@ -154,16 +145,5 @@
   <script src="js/api.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/history.js"></script>
-  <script>
-    function updateClock() {
-      const el = document.getElementById('nav-live-time');
-      if (el) {
-        const now = new Date();
-        el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      }
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-  </script>
 </body>
 </html>

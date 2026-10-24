@@ -31,12 +31,6 @@
               <span>⚡</span>
             </div>
             <a href="learn.html" class="nav-item">Learn</a>
-            <a href="https://github.com/ambavkarsarangi776/speed_doctor" target="_blank" rel="noopener noreferrer" class="nav-item">Docs ↗</a>
-          </div>
-
-          <div class="nav-meta">
-            <span class="live-dot"></span>
-            <span id="nav-live-time">12:56 PM</span>
           </div>
         </nav>
       </header>
@@ -229,16 +223,5 @@
   <script src="js/api.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/results.js"></script>
-  <script>
-    function updateClock() {
-      const el = document.getElementById('nav-live-time');
-      if (el) {
-        const now = new Date();
-        el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      }
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-  </script>
 </body>
 </html>

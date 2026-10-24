@@ -118,6 +118,9 @@ body {
 }
 
 .nav-pill-menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -1472,6 +1475,8 @@ body {
     gap: 1rem;
   }
   .nav-pill-menu {
+    position: static;
+    transform: none;
     order: 3;
     width: 100%;
     justify-content: center;
