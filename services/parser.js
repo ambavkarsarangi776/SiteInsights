@@ -1,3 +1,5 @@
+const { getTip } = require('./tips');
+
 /**
  * Audit IDs to extract as performance issues.
  * Only included if audit.score !== null && audit.score < 0.9.
@@ -96,7 +98,8 @@ function parseResult(raw, strategy = 'mobile') {
         id: auditId,
         title: audit.title || auditId,
         savingsMs,
-        displayValue: audit.displayValue || ''
+        displayValue: audit.displayValue || '',
+        tip: getTip(auditId)
       });
     }
   }
