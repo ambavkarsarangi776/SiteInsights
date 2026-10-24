@@ -109,78 +109,74 @@
           <p class="loading-sub">Running Google PageSpeed performance audits (takes ~15-25 seconds)</p>
         </div>
 
-        <!-- Diagram Section (Exact Structure as in 2nd Uploaded Image) -->
+        <!-- Diagram Section (Crisp & Minimalist matching 2nd Uploaded Image) -->
         <section class="diagram-section">
-          <div class="diagram-card">
-            <!-- Top Guideline Row with Labels -->
-            <div class="diagram-top-row">
-              <div class="diagram-guide-pill">Audit Signals</div>
-              <div class="diagram-guide-pill">Clinical Prescriptions</div>
-            </div>
+          <div class="diagram-frame">
+            <!-- SVG Graphic Board for Guidelines and Curved Lines -->
+            <svg class="diagram-svg-board" viewBox="0 0 960 260" fill="none" preserveAspectRatio="none">
+              <!-- Top Guidelines -->
+              <line x1="60" y1="35" x2="320" y2="35" stroke="#e2e8f0" stroke-width="1.5" />
+              <circle cx="120" cy="35" r="2.5" fill="#cbd5e1" />
+              <circle cx="320" cy="35" r="3.5" fill="#111827" />
 
-            <!-- Middle Row with DATA IN, Center Squircle Hub, and PERFORMANCE -->
-            <div class="diagram-main-row">
-              <!-- Left Heading: DATA IN -->
-              <div class="diagram-col-left">
-                <div class="diagram-hero-text">DATA IN</div>
-              </div>
+              <line x1="640" y1="35" x2="900" y2="35" stroke="#e2e8f0" stroke-width="1.5" />
+              <circle cx="640" cy="35" r="3.5" fill="#111827" />
+              <circle cx="840" cy="35" r="2.5" fill="#cbd5e1" />
 
-              <!-- Center Hub Box (Squircle with Halo) -->
-              <div class="diagram-center-box">
-                <div class="hub-cloud-icon">
-                  <!-- Clean Cloud + 4-point Sparkle SVG as in Image 2 -->
-                  <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
-                    <path d="M38 31c2.8 0 5-2.2 5-5 0-2.4-1.7-4.4-4-4.9.1-.5.1-1.1.1-1.6 0-5.5-4.5-10-10-10-3.9 0-7.3 2.3-8.9 5.6C19.4 14.4 18.2 14 17 14c-4.4 0-8 3.6-8 8 0 .6.1 1.2.2 1.8C6.9 24.6 5 26.8 5 29.5 5 32.5 7.5 35 10.5 35H38c2.8 0 5-2.2 5-5z" fill="#111827" />
-                    <path d="M24 19l1.6 3.4L29 24l-3.4 1.6L24 29l-1.6-3.4L19 24l3.4-1.6L24 19z" fill="#ffffff" />
-                  </svg>
+              <!-- 4 Amber S-Curves entering corners of small center hub -->
+              <path d="M 320,35 C 375,35 390,65 425,75" stroke="#f59e0b" stroke-width="1.75" stroke-linecap="round" fill="none" />
+              <path d="M 535,75 C 570,65 585,35 640,35" stroke="#f59e0b" stroke-width="1.75" stroke-linecap="round" fill="none" />
+              <path d="M 320,225 C 375,225 390,195 425,185" stroke="#f59e0b" stroke-width="1.75" stroke-linecap="round" fill="none" />
+              <path d="M 535,185 C 570,195 585,225 640,225" stroke="#f59e0b" stroke-width="1.75" stroke-linecap="round" fill="none" />
+
+              <!-- Bottom Guidelines -->
+              <line x1="60" y1="225" x2="320" y2="225" stroke="#e2e8f0" stroke-width="1.5" />
+              <circle cx="320" cy="225" r="3.5" fill="#111827" />
+
+              <line x1="640" y1="225" x2="900" y2="225" stroke="#e2e8f0" stroke-width="1.5" />
+              <circle cx="640" cy="225" r="3.5" fill="#111827" />
+            </svg>
+
+            <!-- Top Floating Labels -->
+            <div class="dia-pill dia-pill-top-left">Audit Signals</div>
+            <div class="dia-pill dia-pill-top-right">Clinical Prescriptions</div>
+
+            <!-- Middle Typography: DATA IN -->
+            <div class="dia-heading dia-heading-left">DATA IN</div>
+
+            <!-- Center Compact Hub Box (Small & Crisp as in Image 2) -->
+            <div class="dia-center-hub">
+              <div class="dia-hub-bezel">
+                <div class="dia-hub-card">
+                  <div class="dia-hub-icon">
+                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                      <path d="M38 31c2.8 0 5-2.2 5-5 0-2.4-1.7-4.4-4-4.9.1-.5.1-1.1.1-1.6 0-5.5-4.5-10-10-10-3.9 0-7.3 2.3-8.9 5.6C19.4 14.4 18.2 14 17 14c-4.4 0-8 3.6-8 8 0 .6.1 1.2.2 1.8C6.9 24.6 5 26.8 5 29.5 5 32.5 7.5 35 10.5 35H38c2.8 0 5-2.2 5-5z" fill="#111827" />
+                      <path d="M24 19l1.4 3.2L28.5 24l-3.1 1.4L24 28.5l-1.4-3.1L19.5 24l3.1-1.4L24 19z" fill="#ffffff" />
+                    </svg>
+                  </div>
+                  <div class="dia-hub-label">Analyzes • Diagnoses • Prescribes</div>
                 </div>
-                <div class="hub-action-text">Analyzes • Diagnoses • Prescribes</div>
               </div>
-
-              <!-- Right Heading: PERFORMANCE -->
-              <div class="diagram-col-right">
-                <div class="diagram-hero-text">PERFORMANCE</div>
-              </div>
-
-              <!-- SVG Curved Connectors Overlay (Connecting dots to center hub) -->
-              <svg class="diagram-svg-overlay" viewBox="0 0 960 220" preserveAspectRatio="none">
-                <!-- Top-Left Curve -->
-                <path class="svg-conn-path" d="M 120,15 C 280,15 360,75 410,75" />
-                <circle cx="120" cy="15" r="3.5" fill="#111827" />
-                
-                <!-- Top-Right Curve -->
-                <path class="svg-conn-path" d="M 550,75 C 600,75 680,15 840,15" />
-                <circle cx="840" cy="15" r="3.5" fill="#111827" />
-
-                <!-- Bottom-Left Curve -->
-                <path class="svg-conn-path" d="M 120,205 C 280,205 360,145 410,145" />
-                <circle cx="120" cy="205" r="3.5" fill="#111827" />
-
-                <!-- Bottom-Right Curve -->
-                <path class="svg-conn-path" d="M 550,145 C 600,145 680,205 840,205" />
-                <circle cx="840" cy="205" r="3.5" fill="#111827" />
-              </svg>
             </div>
 
-            <!-- Bottom Row with Connected Node Pills (as in Image 2) -->
-            <div class="diagram-bottom-row">
-              <!-- Left Pill Chain -->
-              <div class="pill-chain">
-                <span class="chain-pill">Server TTFB</span>
-                <span class="chain-pill">DOM Size</span>
-                <span class="chain-pill">CSS & JS Rules</span>
-                <span class="chain-pill">Asset Weight</span>
-                <span class="chain-pill">Paylod Weight</span>
-              </div>
+            <!-- Middle Typography: PERFORMANCE -->
+            <div class="dia-heading dia-heading-right">PERFORMANCE</div>
 
-              <!-- Right Pill Chain -->
-              <div class="pill-chain">
-                <span class="chain-pill">90+ Score</span>
-                <span class="chain-pill">Fast FCP</span>
-                <span class="chain-pill">Sub-2s LCP</span>
-                <span class="chain-pill">Zero TBT</span>
-                <span class="chain-pill">Top SEO Rank</span>
-              </div>
+            <!-- Bottom Horizontal Chains (Single Tidy Line Each) -->
+            <div class="dia-chain dia-chain-left">
+              <span class="dia-chain-pill">Server TTFB</span>
+              <span class="dia-chain-pill">DOM Size</span>
+              <span class="dia-chain-pill">CSS/JS</span>
+              <span class="dia-chain-pill">Assets</span>
+              <span class="dia-chain-pill">Payload</span>
+            </div>
+
+            <div class="dia-chain dia-chain-right">
+              <span class="dia-chain-pill">90+ Score</span>
+              <span class="dia-chain-pill">Fast FCP</span>
+              <span class="dia-chain-pill">Sub-2s LCP</span>
+              <span class="dia-chain-pill">Zero TBT</span>
+              <span class="dia-chain-pill">SEO Rank</span>
             </div>
           </div>
         </section>
