@@ -67,7 +67,8 @@ router.get('/history', async (req, res, next) => {
 
     return res.status(200).json(rows);
   } catch (err) {
-    next(err);
+    console.warn('History database warning (falling back to empty list):', err.message);
+    return res.status(200).json([]);
   }
 });
 
@@ -101,7 +102,8 @@ router.get('/sites', async (req, res, next) => {
 
     return res.status(200).json(sites);
   } catch (err) {
-    next(err);
+    console.warn('Sites database warning (falling back to empty list):', err.message);
+    return res.status(200).json([]);
   }
 });
 

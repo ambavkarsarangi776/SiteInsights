@@ -49,9 +49,16 @@
         </div>
         <div class="header-actions">
           <button id="compare-btn" class="btn-secondary">⚡ Compare with Desktop</button>
+          <button id="print-btn" class="btn-secondary" onclick="window.print()">🖨️ Download PDF</button>
           <a href="index.html" class="btn-secondary">← Scan Another</a>
         </div>
       </section>
+
+      <!-- Before / After Score Evolution Banner (Task 1) -->
+      <div id="before-after-banner" class="before-after-banner hidden">
+        <span class="banner-icon" id="ba-icon">📈</span>
+        <span class="banner-text" id="ba-text">Score improved from -- to --</span>
+      </div>
 
       <!-- Strategy Comparison Box (Side by side when compare is clicked) -->
       <section id="compare-box" class="compare-card hidden">
