@@ -21,9 +21,18 @@
 ## 🩺 Overview
 
 Lighthouse and PageSpeed reports are often dense, technical, and overwhelming for beginners. **Website Speed Doctor** bridges this gap by analyzing any public URL and translating raw performance data into a medical-style diagnosis:
-- **Health Score**: A circular gauge rating performance from $0$ to $100$.
+- **Health Score**: A circular gauge rating performance from $0$ to $100$ across 4 intuitive clinical tiers.
 - **Symptoms**: What is slowing the page down in plain English.
 - **Prescriptions**: Prioritized, beginner-friendly fixes complete with concrete code and tool examples.
+
+### 🎯 Doctor’s Performance Scoring Criteria
+
+| Score | Label | Color | Doctor’s Verdict |
+|---|---|---|---|
+| **90 to 100** | **Excellent** | 🟢 Green | Your page loads fast and meets Google’s recommended performance targets. |
+| **70 to 89** | **Good** | 🟡 Yellow | Healthy overall. A few fixes would make it noticeably snappier. |
+| **50 to 69** | **Needs Work** | 🟠 Orange | Usable, but visitors on slower mobile networks will notice delays. Fix the top issues. |
+| **0 to 49** | **Poor** | 🔴 Red | Serious speed problems are likely to frustrate visitors. Fix the top issues first. |
 
 ---
 

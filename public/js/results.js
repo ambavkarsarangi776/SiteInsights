@@ -17,8 +17,9 @@ function showError(msg) {
 }
 
 function formatRatingText(rating) {
+  if (rating === 'excellent') return 'Excellent';
   if (rating === 'good') return 'Good';
-  if (rating === 'needs-improvement') return 'Needs Improvement';
+  if (rating === 'needs-work' || rating === 'needs-improvement') return 'Needs Work';
   return 'Poor';
 }
 
@@ -74,9 +75,8 @@ function renderReport(report) {
   compareBtn.textContent = `⚡ Compare with ${targetOther === 'desktop' ? 'Desktop' : 'Mobile'}`;
   compareBtn.onclick = () => runStrategyComparison(targetOther);
 
-  // Score Gauge
+  // Score Gauge & 4-Tier Doctor's Verdict
   const score = Math.max(0, Math.min(100, Math.round(report.score || 0)));
-  const rating = report.rating || 'poor';
 
   const scoreNumberEl = document.getElementById('score-number');
   scoreNumberEl.textContent = score;
@@ -85,18 +85,22 @@ function renderReport(report) {
   const circumference = 471.24; // 2 * pi * 75
   const offset = circumference - (circumference * score) / 100;
 
-  let scoreColor = '#dc2626'; // poor (red)
-  let verdict = 'Poor Performance';
-  let summary = 'This page has severe loading bottlenecks. Visitors on mobile will likely abandon the page.';
+  let scoreColor = '#dc2626'; // Red
+  let verdict = 'Poor';
+  let summary = 'Serious speed problems are likely to frustrate visitors. Fix the top issues first.';
 
-  if (rating === 'good') {
-    scoreColor = '#16a34a'; // green
-    verdict = 'Excellent Performance';
-    summary = 'Great job! Your website passes performance best practices and provides a fast experience.';
-  } else if (rating === 'needs-improvement') {
-    scoreColor = '#ea580c'; // orange
-    verdict = 'Needs Improvement';
-    summary = 'Your website is usable, but optimization is recommended to prevent delays on mobile connections.';
+  if (score >= 90) {
+    scoreColor = '#16a34a'; // Green
+    verdict = 'Excellent';
+    summary = 'Your page loads fast and meets Google’s recommended performance targets.';
+  } else if (score >= 70) {
+    scoreColor = '#ca8a04'; // Yellow
+    verdict = 'Good';
+    summary = 'Healthy overall. A few fixes would make it noticeably snappier.';
+  } else if (score >= 50) {
+    scoreColor = '#ea580c'; // Orange
+    verdict = 'Needs Work';
+    summary = 'Usable, but visitors on slower mobile networks will notice delays. Fix the top issues.';
   }
 
   scoreNumberEl.style.color = scoreColor;
@@ -283,14 +287,16 @@ async function runStrategyComparison(otherStrategy) {
     document.getElementById('label-current').textContent = curStrat === 'desktop' ? '💻 Desktop' : '📱 Mobile';
     document.getElementById('score-current').textContent = curScore;
     const badgeCur = document.getElementById('badge-current');
-    badgeCur.textContent = formatRatingText(currentReport.rating);
-    badgeCur.className = `badge ${currentReport.rating}`;
+    const curRating = currentReport.rating || (curScore >= 90 ? 'excellent' : curScore >= 70 ? 'good' : curScore >= 50 ? 'needs-work' : 'poor');
+    badgeCur.textContent = formatRatingText(curRating);
+    badgeCur.className = `badge ${curRating}`;
 
     document.getElementById('label-other').textContent = otherStrategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
     document.getElementById('score-other').textContent = othScore;
     const badgeOth = document.getElementById('badge-other');
-    badgeOth.textContent = formatRatingText(otherReport.rating);
-    badgeOth.className = `badge ${otherReport.rating}`;
+    const othRating = otherReport.rating || (othScore >= 90 ? 'excellent' : othScore >= 70 ? 'good' : othScore >= 50 ? 'needs-work' : 'poor');
+    badgeOth.textContent = formatRatingText(othRating);
+    badgeOth.className = `badge ${othRating}`;
 
     // Calculate score difference
     const diff = othScore - curScore;

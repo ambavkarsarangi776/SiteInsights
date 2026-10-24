@@ -28,28 +28,34 @@
 
     <!-- What is a Good Score Section -->
     <section class="learn-card">
-      <h2 class="learn-title">🎯 What is a "Good" Speed Score?</h2>
+      <h2 class="learn-title">🎯 Doctor’s Performance Scoring Criteria</h2>
       <p>
-        Website Speed Doctor uses Google Lighthouse's weighted performance algorithm. The overall score represents how fast, responsive, and stable your site feels to a real visitor on a mid-tier mobile or desktop connection.
+        Website Speed Doctor uses Google Lighthouse's weighted performance algorithm. The overall score represents how fast, responsive, and stable your site feels to real visitors. Here is the exact scoring criteria and doctor's diagnostic status:
       </p>
       
-      <div class="score-bands-grid">
-        <div class="band-card good">
-          <span class="score-pill good">90 – 100</span>
-          <h4>Good (Green)</h4>
-          <p>Your site delivers a snappy, top-tier user experience. High visitor retention and excellent SEO signals.</p>
+      <div class="score-bands-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="band-card excellent">
+          <span class="score-pill excellent">90 to 100</span>
+          <h4>🟢 Excellent</h4>
+          <p>Your page loads fast and meets Google’s recommended performance targets.</p>
         </div>
 
-        <div class="band-card needs-improvement">
-          <span class="score-pill needs-improvement">50 – 89</span>
-          <h4>Needs Improvement (Orange)</h4>
-          <p>The site is usable, but users on slower 3G/4G or older devices will feel delays. Optimization is recommended.</p>
+        <div class="band-card good">
+          <span class="score-pill good">70 to 89</span>
+          <h4>🟡 Good</h4>
+          <p>Healthy overall. A few fixes would make it noticeably snappier.</p>
+        </div>
+
+        <div class="band-card needs-work">
+          <span class="score-pill needs-work">50 to 69</span>
+          <h4>🟠 Needs Work</h4>
+          <p>Usable, but visitors on slower mobile networks will notice delays. Fix the top issues.</p>
         </div>
 
         <div class="band-card poor">
-          <span class="score-pill poor">0 – 49</span>
-          <h4>Poor (Red)</h4>
-          <p>Severe bottlenecks. High risk of visitors leaving before the page loads. Urgent doctor fixes required.</p>
+          <span class="score-pill poor">0 to 49</span>
+          <h4>🔴 Poor</h4>
+          <p>Serious speed problems are likely to frustrate visitors. Fix the top issues first.</p>
         </div>
       </div>
     </section>

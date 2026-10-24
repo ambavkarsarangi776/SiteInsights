@@ -30,14 +30,48 @@ function getRating(value, goodMax, needsImprovementMax) {
 
 /**
  * Calculates overall score rating.
- * 90 - 100: 'good'
- * 50 - 89: 'needs-improvement'
- * 0 - 49: 'poor'
+ * 90 - 100: 'excellent'
+ * 70 - 89:  'good'
+ * 50 - 69:  'needs-work'
+ * 0 - 49:   'poor'
  */
 function getScoreRating(score) {
-  if (score >= 90) return 'good';
-  if (score >= 50) return 'needs-improvement';
+  if (score >= 90) return 'excellent';
+  if (score >= 70) return 'good';
+  if (score >= 50) return 'needs-work';
   return 'poor';
+}
+
+/**
+ * Returns Doctor's verdict details for overall score.
+ */
+function getScoreVerdict(score) {
+  if (score >= 90) {
+    return {
+      label: 'Excellent',
+      color: 'Green',
+      verdict: 'Your page loads fast and meets Google’s recommended performance targets.'
+    };
+  }
+  if (score >= 70) {
+    return {
+      label: 'Good',
+      color: 'Yellow',
+      verdict: 'Healthy overall. A few fixes would make it noticeably snappier.'
+    };
+  }
+  if (score >= 50) {
+    return {
+      label: 'Needs Work',
+      color: 'Orange',
+      verdict: 'Usable, but visitors on slower mobile networks will notice delays. Fix the top issues.'
+    };
+  }
+  return {
+    label: 'Poor',
+    color: 'Red',
+    verdict: 'Serious speed problems are likely to frustrate visitors. Fix the top issues first.'
+  };
 }
 
 /**
@@ -112,6 +146,7 @@ function parseResult(raw, strategy = 'mobile') {
     strategy,
     score,
     rating,
+    verdict: getScoreVerdict(score),
     metrics,
     totalBytes,
     issues
@@ -121,5 +156,6 @@ function parseResult(raw, strategy = 'mobile') {
 module.exports = {
   parseResult,
   getRating,
-  getScoreRating
+  getScoreRating,
+  getScoreVerdict
 };

@@ -38,8 +38,9 @@ function formatDate(isoDate) {
 
 function getScoreRating(score) {
   const num = Number(score);
-  if (num >= 90) return 'good';
-  if (num >= 50) return 'needs-improvement';
+  if (num >= 90) return 'excellent';
+  if (num >= 70) return 'good';
+  if (num >= 50) return 'needs-work';
   return 'poor';
 }
 
