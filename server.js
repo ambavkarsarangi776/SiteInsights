@@ -19,6 +19,14 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
+// API Routes
+const scanRoutes = require('./routes/scan');
+app.use('/api', scanRoutes);
+
+// Central error handler (registered last)
+const errorHandler = require('./middleware/errorHandler');
+app.use(errorHandler);
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Website Speed Doctor server running on port ${PORT}`);
