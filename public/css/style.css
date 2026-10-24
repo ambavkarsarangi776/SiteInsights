@@ -486,12 +486,12 @@ body {
 }
 
 .dia-pill-top-left {
-  left: 210px;
+  left: 205px;
   transform: translate(-50%, -50%);
 }
 
 .dia-pill-top-right {
-  left: 750px;
+  left: 755px;
   transform: translate(-50%, -50%);
 }
 
@@ -583,11 +583,11 @@ body {
 
 .dia-chain-left {
   left: auto;
-  right: calc(100% - 325px);
+  right: calc(100% - 315px);
 }
 
 .dia-chain-right {
-  left: 635px;
+  left: 645px;
   right: auto;
 }
 
