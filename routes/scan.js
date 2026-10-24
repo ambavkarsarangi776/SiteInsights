@@ -4,9 +4,10 @@ const router = express.Router();
 const rateLimit = require('express-rate-limit');
 const NodeCache = require('node-cache');
 
+const pool = require('../config/db');
 const validateUrl = require('../middleware/validateUrl');
 const { runPageSpeed } = require('../services/pagespeed');
-const { parseResult } = require('../services/parser');
+const { parseResult, getRating, getScoreRating } = require('../services/parser');
 
 // Cache configuration: TTL from CACHE_TTL_SECONDS (default 600s / 10m)
 const cacheTtlSeconds = parseInt(process.env.CACHE_TTL_SECONDS, 10) || 600;
@@ -54,7 +55,7 @@ function normalizeUrl(rawUrl) {
 
 /**
  * POST /api/scan
- * Analyzes a URL with Google PageSpeed Insights and returns parsed performance data.
+ * Analyzes a URL with Google PageSpeed Insights, saves to MySQL, and returns performance report.
  * Protected by rate limiting and in-memory caching.
  */
 router.post('/scan', scanRateLimiter, validateUrl, async (req, res, next) => {
@@ -63,7 +64,7 @@ router.post('/scan', scanRateLimiter, validateUrl, async (req, res, next) => {
     const normalizedUrl = normalizeUrl(url);
     const cacheKey = `${normalizedUrl}|${strategy}`;
 
-    // Check cache
+    // Check cache: do not insert into DB on cache hit
     const cachedData = scanCache.get(cacheKey);
     if (cachedData) {
       return res.status(200).json({
@@ -76,11 +77,149 @@ router.post('/scan', scanRateLimiter, validateUrl, async (req, res, next) => {
     const rawData = await runPageSpeed(url, strategy);
     const parsed = parseResult(rawData, strategy);
     parsed.cached = false;
+    parsed.scanId = null;
+    parsed.createdAt = new Date().toISOString();
 
-    // Cache the parsed result
+    // Persist to MySQL (upsert site, then insert scan)
+    try {
+      const [siteResult] = await pool.query(
+        'INSERT INTO sites (url) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)',
+        [normalizedUrl]
+      );
+      const siteId = siteResult.insertId;
+
+      const [scanResult] = await pool.query(
+        `INSERT INTO scans (
+          site_id, strategy, score, fcp_ms, lcp_ms, tbt_ms, cls, speed_index_ms, total_bytes, issues_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          siteId,
+          strategy,
+          parsed.score,
+          parsed.metrics.fcp.value,
+          parsed.metrics.lcp.value,
+          parsed.metrics.tbt.value,
+          parsed.metrics.cls.value,
+          parsed.metrics.speedIndex.value,
+          parsed.totalBytes,
+          JSON.stringify(parsed.issues)
+        ]
+      );
+
+      parsed.scanId = scanResult.insertId;
+      // Fetch precise created_at from database row
+      const [insertedRow] = await pool.query('SELECT created_at FROM scans WHERE id = ?', [parsed.scanId]);
+      if (insertedRow && insertedRow.length > 0) {
+        parsed.createdAt = insertedRow[0].created_at;
+      }
+    } catch (dbErr) {
+      // Do not crash or fail the scan report if database insert fails
+      console.error('Database persistence warning:', dbErr.message);
+    }
+
+    // Cache the fresh result (with scanId and createdAt)
     scanCache.set(cacheKey, parsed);
 
     return res.status(200).json(parsed);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * GET /api/scan/:id
+ * Retrieves a single saved scan from MySQL by ID.
+ * Returns 404 NOT_FOUND if missing.
+ */
+router.get('/scan/:id', async (req, res, next) => {
+  try {
+    const scanId = parseInt(req.params.id, 10);
+    if (isNaN(scanId) || scanId <= 0) {
+      return res.status(404).json({
+        error: {
+          code: 'NOT_FOUND',
+          message: 'Scan not found.'
+        }
+      });
+    }
+
+    const [rows] = await pool.query(
+      `SELECT 
+        sc.id AS scanId,
+        s.url,
+        sc.strategy,
+        sc.score,
+        sc.fcp_ms,
+        sc.lcp_ms,
+        sc.tbt_ms,
+        sc.cls,
+        sc.speed_index_ms,
+        sc.total_bytes,
+        sc.issues_json,
+        sc.created_at AS createdAt
+      FROM scans sc
+      JOIN sites s ON sc.site_id = s.id
+      WHERE sc.id = ?`,
+      [scanId]
+    );
+
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({
+        error: {
+          code: 'NOT_FOUND',
+          message: 'Scan not found.'
+        }
+      });
+    }
+
+    const row = rows[0];
+    const score = row.score;
+    const rating = getScoreRating(score);
+
+    let issues = [];
+    try {
+      issues = typeof row.issues_json === 'string' ? JSON.parse(row.issues_json) : (row.issues_json || []);
+    } catch (_) {
+      issues = [];
+    }
+
+    const clsValue = parseFloat(Number(row.cls || 0).toFixed(3));
+
+    const result = {
+      scanId: row.scanId,
+      url: row.url,
+      strategy: row.strategy,
+      score,
+      rating,
+      metrics: {
+        fcp: {
+          value: row.fcp_ms,
+          rating: getRating(row.fcp_ms, 1800, 3000)
+        },
+        lcp: {
+          value: row.lcp_ms,
+          rating: getRating(row.lcp_ms, 2500, 4000)
+        },
+        tbt: {
+          value: row.tbt_ms,
+          rating: getRating(row.tbt_ms, 200, 600)
+        },
+        cls: {
+          value: clsValue,
+          rating: getRating(clsValue, 0.1, 0.25)
+        },
+        speedIndex: {
+          value: row.speed_index_ms,
+          rating: getRating(row.speed_index_ms, 3400, 5800)
+        }
+      },
+      totalBytes: row.total_bytes,
+      issues,
+      cached: false,
+      createdAt: row.createdAt
+    };
+
+    return res.status(200).json(result);
   } catch (err) {
     next(err);
   }

@@ -21,7 +21,9 @@ app.get('/api/health', (req, res) => {
 
 // API Routes
 const scanRoutes = require('./routes/scan');
+const historyRoutes = require('./routes/history');
 app.use('/api', scanRoutes);
+app.use('/api', historyRoutes);
 
 // Central error handler (registered last)
 const errorHandler = require('./middleware/errorHandler');
