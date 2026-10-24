@@ -8,6 +8,7 @@ const pool = require('../config/db');
 const validateUrl = require('../middleware/validateUrl');
 const { runPageSpeed } = require('../services/pagespeed');
 const { parseResult, getRating, getScoreRating } = require('../services/parser');
+const memoryStore = require('../services/memoryStore');
 
 // Cache configuration: TTL from CACHE_TTL_SECONDS (default 600s / 10m)
 const cacheTtlSeconds = parseInt(process.env.CACHE_TTL_SECONDS, 10) || 600;
@@ -80,7 +81,7 @@ router.post('/scan', scanRateLimiter, validateUrl, async (req, res, next) => {
     parsed.scanId = null;
     parsed.createdAt = new Date().toISOString();
 
-    // Persist to MySQL (upsert site, then insert scan)
+    // Persist to MySQL (upsert site, then insert scan) with resilient fallback
     try {
       const [siteResult] = await pool.query(
         'INSERT INTO sites (url) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)',
@@ -113,8 +114,19 @@ router.post('/scan', scanRateLimiter, validateUrl, async (req, res, next) => {
         parsed.createdAt = insertedRow[0].created_at;
       }
     } catch (dbErr) {
-      // Do not crash or fail the scan report if database insert fails
-      console.error('Database persistence warning:', dbErr.message);
+      console.warn('Database persistence notice (saving to local store):', dbErr.message);
+      const fallbackScan = memoryStore.saveScan(normalizedUrl, strategy, parsed);
+      parsed.scanId = fallbackScan.id;
+      parsed.createdAt = fallbackScan.created_at;
+    }
+
+    // Also mirror to memoryStore so history remains instantly accessible
+    if (!parsed.scanId) {
+      const fallbackScan = memoryStore.saveScan(normalizedUrl, strategy, parsed);
+      parsed.scanId = fallbackScan.id;
+      parsed.createdAt = fallbackScan.created_at;
+    } else {
+      memoryStore.saveScan(normalizedUrl, strategy, parsed);
     }
 
     // Cache the fresh result (with scanId and createdAt)
@@ -143,27 +155,37 @@ router.get('/scan/:id', async (req, res, next) => {
       });
     }
 
-    const [rows] = await pool.query(
-      `SELECT 
-        sc.id AS scanId,
-        s.url,
-        sc.strategy,
-        sc.score,
-        sc.fcp_ms,
-        sc.lcp_ms,
-        sc.tbt_ms,
-        sc.cls,
-        sc.speed_index_ms,
-        sc.total_bytes,
-        sc.issues_json,
-        sc.created_at AS createdAt
-      FROM scans sc
-      JOIN sites s ON sc.site_id = s.id
-      WHERE sc.id = ?`,
-      [scanId]
-    );
+    let rows = [];
+    try {
+      const [dbRows] = await pool.query(
+        `SELECT 
+          sc.id AS scanId,
+          s.url,
+          sc.strategy,
+          sc.score,
+          sc.fcp_ms,
+          sc.lcp_ms,
+          sc.tbt_ms,
+          sc.cls,
+          sc.speed_index_ms,
+          sc.total_bytes,
+          sc.issues_json,
+          sc.created_at AS createdAt
+        FROM scans sc
+        JOIN sites s ON sc.site_id = s.id
+        WHERE sc.id = ?`,
+        [scanId]
+      );
+      rows = dbRows;
+    } catch (dbErr) {
+      console.warn('Scan retrieval DB warning (falling back to memoryStore):', dbErr.message);
+    }
 
     if (!rows || rows.length === 0) {
+      const fallback = memoryStore.getScanById(scanId);
+      if (fallback) {
+        return res.status(200).json(fallback);
+      }
       return res.status(404).json({
         error: {
           code: 'NOT_FOUND',

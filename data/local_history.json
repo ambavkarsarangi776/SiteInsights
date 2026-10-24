@@ -1,0 +1,44 @@
+{
+  "nextScanId": 3,
+  "sites": {
+    "https://example.com": {
+      "id": 1,
+      "url": "https://example.com",
+      "scanCount": 2,
+      "lastScore": 100,
+      "lastScanAt": "2026-10-24T15:44:18.148Z"
+    }
+  },
+  "scans": [
+    {
+      "id": 2,
+      "site_id": 1,
+      "url": "https://example.com",
+      "strategy": "mobile",
+      "score": 100,
+      "fcp_ms": 755,
+      "lcp_ms": 784,
+      "tbt_ms": 0,
+      "cls": 0,
+      "speed_index_ms": 755,
+      "total_bytes": 2323,
+      "issues": [],
+      "created_at": "2026-10-24T15:44:18.148Z"
+    },
+    {
+      "id": 1,
+      "site_id": 1,
+      "url": "https://example.com",
+      "strategy": "mobile",
+      "score": 100,
+      "fcp_ms": 755,
+      "lcp_ms": 784,
+      "tbt_ms": 0,
+      "cls": 0,
+      "speed_index_ms": 755,
+      "total_bytes": 2323,
+      "issues": [],
+      "created_at": "2026-10-24T15:44:18.145Z"
+    }
+  ]
+}

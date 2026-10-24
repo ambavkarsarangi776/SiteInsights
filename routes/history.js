@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../config/db');
+const memoryStore = require('../services/memoryStore');
 
 /**
  * Normalizes a URL to match stored site records.
@@ -47,7 +48,10 @@ router.get('/history', async (req, res, next) => {
         [normalized, withSlash]
       );
 
-      return res.status(200).json(rows);
+      if (rows && rows.length > 0) {
+        return res.status(200).json(rows);
+      }
+      return res.status(200).json(memoryStore.getHistory(rawUrl));
     }
 
     // Default: latest 20 scans across all sites
@@ -65,10 +69,13 @@ router.get('/history', async (req, res, next) => {
       LIMIT 20`
     );
 
-    return res.status(200).json(rows);
+    if (rows && rows.length > 0) {
+      return res.status(200).json(rows);
+    }
+    return res.status(200).json(memoryStore.getHistory());
   } catch (err) {
-    console.warn('History database warning (falling back to empty list):', err.message);
-    return res.status(200).json([]);
+    console.warn('History database notice (serving from local store):', err.message);
+    return res.status(200).json(memoryStore.getHistory(req.query.url));
   }
 });
 
@@ -92,18 +99,20 @@ router.get('/sites', async (req, res, next) => {
       ORDER BY lastScanAt DESC, s.id DESC`
     );
 
-    const sites = rows.map((r) => ({
-      id: r.id,
-      url: r.url,
-      scanCount: Number(r.scanCount),
-      lastScore: r.lastScore !== null && r.lastScore !== undefined ? Number(r.lastScore) : null,
-      lastScanAt: r.lastScanAt
-    }));
-
-    return res.status(200).json(sites);
+    if (rows && rows.length > 0) {
+      const sites = rows.map((r) => ({
+        id: r.id,
+        url: r.url,
+        scanCount: Number(r.scanCount),
+        lastScore: r.lastScore !== null && r.lastScore !== undefined ? Number(r.lastScore) : null,
+        lastScanAt: r.lastScanAt
+      }));
+      return res.status(200).json(sites);
+    }
+    return res.status(200).json(memoryStore.getSites());
   } catch (err) {
-    console.warn('Sites database warning (falling back to empty list):', err.message);
-    return res.status(200).json([]);
+    console.warn('Sites database notice (serving from local store):', err.message);
+    return res.status(200).json(memoryStore.getSites());
   }
 });
 
