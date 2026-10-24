@@ -2,10 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>History - Website Speed Doctor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan History - Website Speed Doctor</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1>History Page (Phase 6+)</h1>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">⚡ Website <span>Speed Doctor</span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="history.html" class="active">History</a></li>
+        <li><a href="learn.html">Learn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Scan History & Performance Trends</h1>
+      <p class="subtitle">Browse past website scans and monitor how speed scores evolve over time.</p>
+    </section>
+
+    <!-- Error message alert -->
+    <div id="error-banner" class="error-banner hidden" role="alert">
+      <span>⚠️</span>
+      <span id="error-text">Failed to load history data.</span>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="loading-box">
+      <div class="spinner"></div>
+      <p class="loading-msg">Loading analyzed sites...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="empty-state hidden">
+      <h3>No Scans Found Yet</h3>
+      <p style="margin-bottom: 1.5rem;">You haven't scanned any websites yet. Enter a website URL on the home page to diagnose its speed!</p>
+      <a href="index.html" class="btn-primary">Scan Your First Website</a>
+    </div>
+
+    <!-- Main Content (Sites list & Trend details) -->
+    <div id="history-content" class="hidden">
+      <!-- Sites Table -->
+      <section class="history-table-card">
+        <h3 class="section-title">Analyzed Websites</h3>
+        <p class="table-sub">Click any site to view its score trend chart and past reports.</p>
+        <div class="table-responsive">
+          <table class="data-table" id="sites-table">
+            <thead>
+              <tr>
+                <th>Website URL</th>
+                <th>Total Scans</th>
+                <th>Latest Score</th>
+                <th>Last Scan Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="sites-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Selected Site Details & Score Trend Chart -->
+      <section id="site-detail-section" class="site-detail-card hidden">
+        <div class="detail-header">
+          <div>
+            <h3 id="selected-site-title">Score Trend</h3>
+            <p id="selected-site-sub" class="text-muted">Performance history over time</p>
+          </div>
+          <button id="close-detail-btn" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">✕ Close Trend</button>
+        </div>
+
+        <!-- Trend Line Chart -->
+        <div class="chart-container" style="position: relative; height: 300px; width: 100%; margin-bottom: 2rem;">
+          <canvas id="score-trend-chart"></canvas>
+        </div>
+
+        <!-- Past Scans Table -->
+        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Past Scan Reports</h4>
+        <div class="table-responsive">
+          <table class="data-table" id="scans-table">
+            <thead>
+              <tr>
+                <th>Scan ID</th>
+                <th>Device Strategy</th>
+                <th>Score</th>
+                <th>LCP</th>
+                <th>Date & Time</th>
+                <th>Report</th>
+              </tr>
+            </thead>
+            <tbody id="scans-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/history.js"></script>
 </body>
 </html>
