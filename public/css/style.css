@@ -472,11 +472,11 @@ body {
 /* Top Guidelines & Pills */
 .dia-pill {
   position: absolute;
-  top: 35px;
+  top: 40px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 9999px;
-  padding: 0.22rem 0.8rem;
+  padding: 0.25rem 0.9rem;
   font-size: 0.78rem;
   font-weight: 600;
   color: #475569;
@@ -486,12 +486,12 @@ body {
 }
 
 .dia-pill-top-left {
-  left: 21%;
+  left: 210px;
   transform: translate(-50%, -50%);
 }
 
 .dia-pill-top-right {
-  left: 80%;
+  left: 750px;
   transform: translate(-50%, -50%);
 }
 
@@ -500,21 +500,21 @@ body {
   position: absolute;
   top: 130px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 2.15rem;
+  font-size: 2.3rem;
   font-weight: 700;
   color: #1e293b;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   z-index: 2;
   white-space: nowrap;
 }
 
 .dia-heading-left {
-  left: 21%;
+  left: 180px;
   transform: translate(-50%, -50%);
 }
 
 .dia-heading-right {
-  left: 80%;
+  left: 780px;
   transform: translate(-50%, -50%);
 }
 
@@ -569,10 +569,10 @@ body {
   line-height: 1.25;
 }
 
-/* Bottom Horizontal Chains (Single Tidy Line Each) */
+/* Bottom Horizontal Chains (Connected along Guidelines) */
 .dia-chain {
   position: absolute;
-  top: 225px;
+  top: 220px;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
@@ -582,11 +582,13 @@ body {
 }
 
 .dia-chain-left {
-  left: 50px;
+  left: auto;
+  right: calc(100% - 325px);
 }
 
 .dia-chain-right {
-  right: 50px;
+  left: 635px;
+  right: auto;
 }
 
 .dia-chain-pill {
