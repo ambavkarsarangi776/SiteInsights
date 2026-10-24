@@ -2,10 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Learn - Website Speed Doctor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Web Speed - Website Speed Doctor</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Learn Page (Phase 6+)</h1>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">⚡ Website <span>Speed Doctor</span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="learn.html" class="active">Learn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Web Performance Glossary</h1>
+      <p class="subtitle">A beginner-friendly guide to Core Web Vitals, performance thresholds, and what your doctor's report means.</p>
+    </section>
+
+    <!-- What is a Good Score Section -->
+    <section class="learn-card">
+      <h2 class="learn-title">🎯 What is a "Good" Speed Score?</h2>
+      <p>
+        Website Speed Doctor uses Google Lighthouse's weighted performance algorithm. The overall score represents how fast, responsive, and stable your site feels to a real visitor on a mid-tier mobile or desktop connection.
+      </p>
+      
+      <div class="score-bands-grid">
+        <div class="band-card good">
+          <span class="score-pill good">90 – 100</span>
+          <h4>Good (Green)</h4>
+          <p>Your site delivers a snappy, top-tier user experience. High visitor retention and excellent SEO signals.</p>
+        </div>
+
+        <div class="band-card needs-improvement">
+          <span class="score-pill needs-improvement">50 – 89</span>
+          <h4>Needs Improvement (Orange)</h4>
+          <p>The site is usable, but users on slower 3G/4G or older devices will feel delays. Optimization is recommended.</p>
+        </div>
+
+        <div class="band-card poor">
+          <span class="score-pill poor">0 – 49</span>
+          <h4>Poor (Red)</h4>
+          <p>Severe bottlenecks. High risk of visitors leaving before the page loads. Urgent doctor fixes required.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Threshold Reference Table (Section 9) -->
+    <section class="learn-card">
+      <h2 class="learn-title">📊 Google Core Web Vitals Thresholds</h2>
+      <p style="margin-bottom: 1.25rem;">
+        These official Google performance benchmarks define whether each individual speed metric is in good health:
+      </p>
+      
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Good (Green)</th>
+              <th>Needs Improvement (Orange)</th>
+              <th>Poor (Red)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>First Contentful Paint (FCP)</strong></td>
+              <td><span class="score-pill good">≤ 1800 ms</span></td>
+              <td><span class="score-pill needs-improvement">≤ 3000 ms</span></td>
+              <td><span class="score-pill poor">> 3000 ms</span></td>
+            </tr>
+            <tr>
+              <td><strong>Largest Contentful Paint (LCP)</strong></td>
+              <td><span class="score-pill good">≤ 2500 ms</span></td>
+              <td><span class="score-pill needs-improvement">≤ 4000 ms</span></td>
+              <td><span class="score-pill poor">> 4000 ms</span></td>
+            </tr>
+            <tr>
+              <td><strong>Total Blocking Time (TBT)</strong></td>
+              <td><span class="score-pill good">≤ 200 ms</span></td>
+              <td><span class="score-pill needs-improvement">≤ 600 ms</span></td>
+              <td><span class="score-pill poor">> 600 ms</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cumulative Layout Shift (CLS)</strong></td>
+              <td><span class="score-pill good">≤ 0.1</span></td>
+              <td><span class="score-pill needs-improvement">≤ 0.25</span></td>
+              <td><span class="score-pill poor">> 0.25</span></td>
+            </tr>
+            <tr>
+              <td><strong>Speed Index</strong></td>
+              <td><span class="score-pill good">≤ 3400 ms</span></td>
+              <td><span class="score-pill needs-improvement">≤ 5800 ms</span></td>
+              <td><span class="score-pill poor">> 5800 ms</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Detailed Glossary of Each Metric -->
+    <section class="learn-card">
+      <h2 class="learn-title">📖 The 5 Key Speed Metrics Explained</h2>
+
+      <!-- FCP -->
+      <article class="glossary-item">
+        <div class="glossary-header">
+          <h3>1. First Contentful Paint (FCP)</h3>
+          <span class="score-pill good">Target: ≤ 1.8 s</span>
+        </div>
+        <p><strong>What it measures:</strong> The exact time from when the user enters your URL until the browser renders the very first piece of content (text, an image, or canvas element).</p>
+        <p><strong>Plain English:</strong> The "is it working?" moment. If FCP is fast, visitors know the server is alive and responding quickly.</p>
+      </article>
+
+      <!-- LCP -->
+      <article class="glossary-item">
+        <div class="glossary-header">
+          <h3>2. Largest Contentful Paint (LCP)</h3>
+          <span class="score-pill good">Target: ≤ 2.5 s</span>
+        </div>
+        <p><strong>What it measures:</strong> The time it takes for the largest visual block of content on the screen to appear (e.g. hero banner image, heading, or primary body paragraph).</p>
+        <p><strong>Plain English:</strong> The "is it useful?" moment. This is what users actually came to see. Google treats LCP as a primary Core Web Vital.</p>
+      </article>
+
+      <!-- TBT -->
+      <article class="glossary-item">
+        <div class="glossary-header">
+          <h3>3. Total Blocking Time (TBT)</h3>
+          <span class="score-pill good">Target: ≤ 200 ms</span>
+        </div>
+        <p><strong>What it measures:</strong> The total time during page load where the browser's main thread is locked up by heavy JavaScript execution, preventing user interactions.</p>
+        <p><strong>Plain English:</strong> The "is it responsive?" metric. High TBT causes buttons and menus to feel frozen when clicked.</p>
+      </article>
+
+      <!-- CLS -->
+      <article class="glossary-item">
+        <div class="glossary-header">
+          <h3>4. Cumulative Layout Shift (CLS)</h3>
+          <span class="score-pill good">Target: ≤ 0.1</span>
+        </div>
+        <p><strong>What it measures:</strong> How much elements unexpectedly jump or shift position while the page is rendering (often caused by images without width/height attributes or late-loading web fonts and ads).</p>
+        <p><strong>Plain English:</strong> Visual stability. Low CLS ensures buttons don't move right before a visitor clicks on them.</p>
+      </article>
+
+      <!-- Speed Index -->
+      <article class="glossary-item">
+        <div class="glossary-header">
+          <h3>5. Speed Index</h3>
+          <span class="score-pill good">Target: ≤ 3.4 s</span>
+        </div>
+        <p><strong>What it measures:</strong> How quickly the visible area of the page fills with content over time.</p>
+        <p><strong>Plain English:</strong> A smooth progressive reveal where parts of the page appear continuously feels much faster to human brains than a blank screen that flashes all at once.</p>
+      </article>
+    </section>
+
+    <!-- Bottom CTA -->
+    <div class="actions-row">
+      <a href="index.html" class="btn-primary">Ready to Test Your Site? Analyze Now</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
+  </footer>
 </body>
 </html>
