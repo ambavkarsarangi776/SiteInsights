@@ -1,6 +1,6 @@
-# ⚡ Website Speed Doctor
+# SiteInsight
 
-> A plain-English website performance diagnostic web application that translates technical Lighthouse audits into an actionable "doctor's prescription" report for students, junior developers, and freelancers.
+> A plain-English website performance diagnostic web application that translates technical Lighthouse audits into an actionable optimization report for students, junior developers, and freelancers.
 
 ---
 
@@ -18,9 +18,9 @@
 
 ---
 
-## 🩺 Overview
+## Overview
 
-Lighthouse and PageSpeed reports are often dense, technical, and overwhelming for beginners. **Website Speed Doctor** bridges this gap by analyzing any public URL and translating raw performance data into a medical-style diagnosis:
+Lighthouse and PageSpeed reports are often dense, technical, and overwhelming for beginners. **SiteInsight** bridges this gap by analyzing any public URL and translating raw performance data into an intuitive diagnosis:
 - **Health Score**: A circular gauge rating performance from $0$ to $100$ across 4 intuitive clinical tiers.
 - **Symptoms**: What is slowing the page down in plain English.
 - **Prescriptions**: Prioritized, beginner-friendly fixes complete with concrete code and tool examples.

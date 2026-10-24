@@ -152,7 +152,7 @@ function renderReport(report) {
   issuesList.innerHTML = '';
 
   if (issues.length === 0) {
-    issuesHeader.textContent = "Doctor's Prescriptions (All Clear)";
+    issuesHeader.textContent = "SiteInsight Prescriptions (All Clear)";
     issuesList.innerHTML = `
       <div class="empty-state">
         <h3>No Critical Issues Found!</h3>
@@ -162,7 +162,7 @@ function renderReport(report) {
     return;
   }
 
-  issuesHeader.textContent = `Doctor's Prescriptions (${issues.length} ${issues.length === 1 ? 'Issue' : 'Issues'} to Fix)`;
+  issuesHeader.textContent = `SiteInsight Prescriptions (${issues.length} ${issues.length === 1 ? 'Issue' : 'Issues'} to Fix)`;
 
   issues.forEach((issue) => {
     const card = document.createElement('div');

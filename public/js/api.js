@@ -1,5 +1,5 @@
 /**
- * API Fetch Wrapper for Website Speed Doctor.
+ * API Fetch Wrapper for SiteInsight.
  * Provides clean error handling and parsed JSON results.
  */
 

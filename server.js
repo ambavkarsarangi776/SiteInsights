@@ -31,7 +31,7 @@ app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Website Speed Doctor server running on port ${PORT}`);
+  console.log(`SiteInsight server running on port ${PORT}`);
 });
 
 module.exports = app;

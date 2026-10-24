@@ -1,5 +1,5 @@
 /**
- * Chart.js visualization utilities for Website Speed Doctor.
+ * Chart.js visualization utilities for SiteInsight.
  * Uses Chart.js loaded via CDN.
  */
 

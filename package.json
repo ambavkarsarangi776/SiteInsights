@@ -1,7 +1,7 @@
 {
-  "name": "speed-doctor",
+  "name": "site-insight",
   "version": "1.0.0",
-  "description": "Website Speed Doctor - plain-English performance reports powered by PageSpeed Insights",
+  "description": "SiteInsight - plain-English website performance reports powered by PageSpeed Insights",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
