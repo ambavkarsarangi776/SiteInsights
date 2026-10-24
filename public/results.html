@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Performance Diagnosis - Website Speed Doctor</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Chart.js via CDN per PRD Tech Stack -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
@@ -45,9 +47,30 @@
             <span id="report-date">Just now</span>
           </div>
         </div>
-        <div>
-          <a href="index.html" class="btn-secondary">← Scan Another Site</a>
+        <div class="header-actions">
+          <button id="compare-btn" class="btn-secondary">⚡ Compare with Desktop</button>
+          <a href="index.html" class="btn-secondary">← Scan Another</a>
         </div>
+      </section>
+
+      <!-- Strategy Comparison Box (Side by side when compare is clicked) -->
+      <section id="compare-box" class="compare-card hidden">
+        <h3 class="compare-title">Strategy Comparison</h3>
+        <p class="compare-sub" id="compare-status">Analyzing performance on the alternative device...</p>
+        <div id="compare-grid" class="compare-grid hidden">
+          <div class="compare-col" id="col-current">
+            <span class="compare-device" id="label-current">📱 Mobile</span>
+            <div class="compare-score" id="score-current">--</div>
+            <span class="badge" id="badge-current">--</span>
+          </div>
+          <div class="compare-vs">VS</div>
+          <div class="compare-col" id="col-other">
+            <span class="compare-device" id="label-other">💻 Desktop</span>
+            <div class="compare-score" id="score-other">--</div>
+            <span class="badge" id="badge-other">--</span>
+          </div>
+        </div>
+        <div id="compare-diff" class="compare-diff-pill hidden"></div>
       </section>
 
       <!-- Overall Performance Score Gauge -->
@@ -66,9 +89,19 @@
         <p id="score-summary" class="score-desc">Overall performance score calculated using Google Lighthouse audits.</p>
       </section>
 
+      <!-- Horizontal Bar Chart: Metrics vs Thresholds -->
+      <section class="chart-section">
+        <h3 class="section-title">Metrics vs. Good Thresholds</h3>
+        <div class="chart-card">
+          <div class="chart-container" style="position: relative; height: 260px; width: 100%;">
+            <canvas id="metrics-bar-chart"></canvas>
+          </div>
+        </div>
+      </section>
+
       <!-- Core Web Vitals Metrics Grid -->
       <section class="metrics-section">
-        <h3 class="section-title">Core Web Vitals & Metrics</h3>
+        <h3 class="section-title">Core Web Vitals & Metrics Breakdown</h3>
         <div class="metrics-grid">
           <!-- FCP -->
           <div id="metric-fcp" class="metric-card">
@@ -142,6 +175,7 @@
   </footer>
 
   <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
   <script src="js/results.js"></script>
 </body>
 </html>
