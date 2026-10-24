@@ -197,6 +197,61 @@ function renderReport(report) {
 
     issuesList.appendChild(card);
   });
+
+  // Check for earlier scans of the same site & strategy (Task 1)
+  checkBeforeAfterComparison(report);
+}
+
+/**
+ * Checks past history for this site & strategy to display a Before/After improvement banner.
+ */
+async function checkBeforeAfterComparison(report) {
+  const baBanner = document.getElementById('before-after-banner');
+  const baIcon = document.getElementById('ba-icon');
+  const baText = document.getElementById('ba-text');
+  if (!baBanner || !report.url) return;
+
+  try {
+    const history = await apiGetHistory(report.url);
+    if (!Array.isArray(history) || history.length === 0) return;
+
+    const currentId = Number(report.scanId || 0);
+    const currentDate = new Date(report.createdAt || Date.now()).getTime();
+
+    // Filter scans matching the same device strategy that occurred before this scan
+    const previousScans = history.filter((s) => {
+      if (s.strategy !== report.strategy) return false;
+      const sId = Number(s.id);
+      if (currentId > 0 && sId >= currentId) return false;
+      const sDate = new Date(s.created_at).getTime();
+      return sDate <= currentDate;
+    });
+
+    if (previousScans.length > 0) {
+      const prev = previousScans[0];
+      const prevScore = Number(prev.score);
+      const curScore = Number(report.score);
+      const diff = curScore - prevScore;
+
+      baBanner.classList.remove('hidden');
+
+      if (diff > 0) {
+        baBanner.className = 'before-after-banner good';
+        baIcon.textContent = '🚀';
+        baText.textContent = `Score improved from ${prevScore} to ${curScore} (+${diff})`;
+      } else if (diff < 0) {
+        baBanner.className = 'before-after-banner poor';
+        baIcon.textContent = '⚠️';
+        baText.textContent = `Score dropped from ${prevScore} to ${curScore} (${diff})`;
+      } else {
+        baBanner.className = 'before-after-banner neutral';
+        baIcon.textContent = '⚖️';
+        baText.textContent = `Score unchanged from earlier scan at ${curScore} / 100`;
+      }
+    }
+  } catch (err) {
+    console.debug('Before/After check skipped:', err.message);
+  }
 }
 
 /**
