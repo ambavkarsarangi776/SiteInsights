@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Speed Doctor</title>
+  <title>Website Speed Doctor - Website Performance Diagnosis</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <nav class="navbar">
-      <div class="logo">⚡ Website Speed Doctor</div>
+      <div class="logo">
+        <a href="index.html">⚡ Website <span>Speed Doctor</span></a>
+      </div>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="history.html">History</a></li>
@@ -21,34 +23,58 @@
   <main class="container">
     <section class="hero">
       <h1>Website Speed Doctor</h1>
-      <p class="subtitle">Get a plain-English performance diagnosis and prescriptions for your website.</p>
+      <p class="subtitle">Enter any public website URL to receive a plain-English performance diagnosis and actionable prescriptions.</p>
     </section>
 
-    <section class="scan-section">
-      <form id="scan-form" class="scan-form">
-        <div class="input-group">
+    <!-- Error message alert -->
+    <div id="error-banner" class="error-banner hidden" role="alert">
+      <span class="error-icon">⚠️</span>
+      <span id="error-text">An error occurred.</span>
+    </div>
+
+    <!-- Scan Form Card -->
+    <section class="scan-card">
+      <form id="scan-form" novalidate>
+        <div class="input-row">
           <input 
             type="url" 
             id="url-input" 
             name="url" 
             placeholder="https://example.com" 
+            autocomplete="url"
             required
           >
-          <button type="submit" id="analyze-btn" class="btn-primary">Analyze</button>
+          <button type="submit" id="analyze-btn" class="btn-primary">
+            <span>Analyze Speed</span>
+          </button>
         </div>
 
-        <div class="strategy-options">
-          <label class="radio-label">
+        <div class="strategy-row">
+          <label class="radio-pill">
             <input type="radio" name="strategy" value="mobile" checked>
-            Mobile
+            📱 Mobile
           </label>
-          <label class="radio-label">
+          <label class="radio-pill">
             <input type="radio" name="strategy" value="desktop">
-            Desktop
+            💻 Desktop
           </label>
         </div>
       </form>
     </section>
+
+    <!-- Loading State with rotating messages -->
+    <div id="loading-box" class="loading-box hidden">
+      <div class="spinner"></div>
+      <p id="loading-msg" class="loading-msg">Connecting to your site...</p>
+      <p class="loading-sub">Running Google PageSpeed performance audits (takes ~15-30 seconds)</p>
+    </div>
   </main>
+
+  <footer>
+    <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>
