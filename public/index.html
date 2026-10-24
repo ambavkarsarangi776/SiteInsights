@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Website Speed Doctor - Website Performance Diagnosis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -38,17 +41,27 @@
 
       <!-- Main App Content -->
       <main class="container">
-        <!-- Hero Section -->
+        <!-- Hero Section (Exact Style & Font as 3rd Uploaded Image) -->
         <section class="hero">
           <div class="hero-badge">
-            <span class="badge-sparkle">✦</span> Speed Doctor for Web Teams
+            <span class="badge-dot-amber">●</span> Speed Doctor for Web Teams
           </div>
+          
           <h1 class="hero-title">
-            Clinical diagnosis for<br>
-            your <span class="hero-inline-badge">⚡</span> page speed.
+            <span class="title-muted">Clinical diagnosis</span> <span class="title-dark">for</span><br>
+            <span class="title-muted">heals</span>
+            <span class="hero-inline-badge">
+              <svg class="badge-icon-trend" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#111827" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"/>
+                <path d="m19 9-5 5-4-4-3 3"/>
+                <path d="M14 9h5v5"/>
+              </svg>
+            </span>
+            <span class="title-dark">your page speed.</span>
           </h1>
+
           <p class="hero-subtitle">
-            Website Speed Doctor diagnoses Lighthouse performance bottlenecks, translates technical audits into beginner-friendly prescriptions, and optimizes Core Web Vitals so visitors never wait.
+            Website Speed Doctor diagnoses Lighthouse performance bottlenecks, translates technical audits into beginner-friendly prescriptions, and optimizes Core Web Vitals so your visitors never wait.
           </p>
         </section>
 
@@ -96,62 +109,92 @@
           <p class="loading-sub">Running Google PageSpeed performance audits (takes ~15-25 seconds)</p>
         </div>
 
-        <!-- Interactive Architecture Flow Diagram (DATA IN -> HUB -> PERFORMANCE) -->
+        <!-- Diagram Section (Exact Structure as in 2nd Uploaded Image) -->
         <section class="diagram-section">
-          <div class="diagram-container">
-            <!-- Left: DATA IN -->
-            <div class="diagram-side data-in-side">
-              <div class="diagram-heading">DATA IN</div>
-              <div class="diagram-nodes">
-                <span class="node-pill">Server TTFB</span>
-                <span class="node-pill">DOM Size</span>
-                <span class="node-pill">CSS & JS Rules</span>
-                <span class="node-pill">Asset Weight</span>
-                <span class="node-pill">Network Payloads</span>
-              </div>
+          <div class="diagram-card">
+            <!-- Top Guideline Row with Labels -->
+            <div class="diagram-top-row">
+              <div class="diagram-guide-pill">Audit Signals</div>
+              <div class="diagram-guide-pill">Clinical Prescriptions</div>
             </div>
 
-            <!-- SVG Curved Connectors -->
-            <svg class="diagram-connectors" viewBox="0 0 600 240" fill="none" preserveAspectRatio="none">
-              <path class="conn-line" d="M 120,60 C 220,60 230,120 300,120" />
-              <path class="conn-line" d="M 120,120 C 220,120 240,120 300,120" />
-              <path class="conn-line" d="M 120,180 C 220,180 230,120 300,120" />
-              <path class="conn-line" d="M 300,120 C 370,120 380,60 480,60" />
-              <path class="conn-line" d="M 300,120 C 370,120 380,120 480,120" />
-              <path class="conn-line" d="M 300,120 C 370,120 380,180 480,180" />
-            </svg>
-
-            <!-- Center Elevated Hub -->
-            <div class="diagram-center-hub">
-              <div class="hub-icon-box">
-                <span>🩺</span>
+            <!-- Middle Row with DATA IN, Center Squircle Hub, and PERFORMANCE -->
+            <div class="diagram-main-row">
+              <!-- Left Heading: DATA IN -->
+              <div class="diagram-col-left">
+                <div class="diagram-hero-text">DATA IN</div>
               </div>
-              <div class="hub-title">Speed Doctor</div>
-              <div class="hub-sub">Analyzes • Diagnoses • Prescribes</div>
+
+              <!-- Center Hub Box (Squircle with Halo) -->
+              <div class="diagram-center-box">
+                <div class="hub-cloud-icon">
+                  <!-- Clean Cloud + 4-point Sparkle SVG as in Image 2 -->
+                  <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+                    <path d="M38 31c2.8 0 5-2.2 5-5 0-2.4-1.7-4.4-4-4.9.1-.5.1-1.1.1-1.6 0-5.5-4.5-10-10-10-3.9 0-7.3 2.3-8.9 5.6C19.4 14.4 18.2 14 17 14c-4.4 0-8 3.6-8 8 0 .6.1 1.2.2 1.8C6.9 24.6 5 26.8 5 29.5 5 32.5 7.5 35 10.5 35H38c2.8 0 5-2.2 5-5z" fill="#111827" />
+                    <path d="M24 19l1.6 3.4L29 24l-3.4 1.6L24 29l-1.6-3.4L19 24l3.4-1.6L24 19z" fill="#ffffff" />
+                  </svg>
+                </div>
+                <div class="hub-action-text">Analyzes • Diagnoses • Prescribes</div>
+              </div>
+
+              <!-- Right Heading: PERFORMANCE -->
+              <div class="diagram-col-right">
+                <div class="diagram-hero-text">PERFORMANCE</div>
+              </div>
+
+              <!-- SVG Curved Connectors Overlay (Connecting dots to center hub) -->
+              <svg class="diagram-svg-overlay" viewBox="0 0 960 220" preserveAspectRatio="none">
+                <!-- Top-Left Curve -->
+                <path class="svg-conn-path" d="M 120,15 C 280,15 360,75 410,75" />
+                <circle cx="120" cy="15" r="3.5" fill="#111827" />
+                
+                <!-- Top-Right Curve -->
+                <path class="svg-conn-path" d="M 550,75 C 600,75 680,15 840,15" />
+                <circle cx="840" cy="15" r="3.5" fill="#111827" />
+
+                <!-- Bottom-Left Curve -->
+                <path class="svg-conn-path" d="M 120,205 C 280,205 360,145 410,145" />
+                <circle cx="120" cy="205" r="3.5" fill="#111827" />
+
+                <!-- Bottom-Right Curve -->
+                <path class="svg-conn-path" d="M 550,145 C 600,145 680,205 840,205" />
+                <circle cx="840" cy="205" r="3.5" fill="#111827" />
+              </svg>
             </div>
 
-            <!-- Right: PERFORMANCE -->
-            <div class="diagram-side data-out-side">
-              <div class="diagram-heading">PERFORMANCE</div>
-              <div class="diagram-nodes">
-                <span class="node-pill">90+ Score</span>
-                <span class="node-pill">Fast FCP</span>
-                <span class="node-pill">Sub-2s LCP</span>
-                <span class="node-pill">Zero TBT</span>
-                <span class="node-pill">Top SEO Rank</span>
+            <!-- Bottom Row with Connected Node Pills (as in Image 2) -->
+            <div class="diagram-bottom-row">
+              <!-- Left Pill Chain -->
+              <div class="pill-chain">
+                <span class="chain-pill">Server TTFB</span>
+                <span class="chain-pill">DOM Size</span>
+                <span class="chain-pill">CSS & JS Rules</span>
+                <span class="chain-pill">Asset Weight</span>
+                <span class="chain-pill">Paylod Weight</span>
+              </div>
+
+              <!-- Right Pill Chain -->
+              <div class="pill-chain">
+                <span class="chain-pill">90+ Score</span>
+                <span class="chain-pill">Fast FCP</span>
+                <span class="chain-pill">Sub-2s LCP</span>
+                <span class="chain-pill">Zero TBT</span>
+                <span class="chain-pill">Top SEO Rank</span>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- The 5 Core Vitals Frames -->
+        <!-- The 5 Core Vitals Frames (3 Above, 2 Below Centered) -->
         <section class="bottom-frames-section">
           <div class="frames-header-row">
             <div class="dark-pill-tag">Clinical Vitals</div>
             <p class="frames-subtitle">The 5 Core Web Vitals and speed metrics diagnosed in every scan.</p>
           </div>
+
+          <!-- Frames Grid: 3 Top, 2 Bottom Centered -->
           <div class="frames-grid">
-            <!-- Frame 1: FCP -->
+            <!-- Row 1: Frame 1 (FCP) -->
             <div class="feature-frame">
               <div class="frame-top">
                 <div class="frame-icon-squircle">⏱️</div>
@@ -162,7 +205,7 @@
               <div class="frame-badge">Target: ≤ 1.8 s</div>
             </div>
 
-            <!-- Frame 2: LCP -->
+            <!-- Row 1: Frame 2 (LCP) -->
             <div class="feature-frame">
               <div class="frame-top">
                 <div class="frame-icon-squircle">🖼️</div>
@@ -173,7 +216,7 @@
               <div class="frame-badge">Target: ≤ 2.5 s</div>
             </div>
 
-            <!-- Frame 3: TBT -->
+            <!-- Row 1: Frame 3 (TBT) -->
             <div class="feature-frame">
               <div class="frame-top">
                 <div class="frame-icon-squircle">🛑</div>
@@ -184,7 +227,7 @@
               <div class="frame-badge">Target: ≤ 200 ms</div>
             </div>
 
-            <!-- Frame 4: CLS -->
+            <!-- Row 2: Frame 4 (CLS) - Centered -->
             <div class="feature-frame">
               <div class="frame-top">
                 <div class="frame-icon-squircle">📐</div>
@@ -195,7 +238,7 @@
               <div class="frame-badge">Target: ≤ 0.100</div>
             </div>
 
-            <!-- Frame 5: Speed Index -->
+            <!-- Row 2: Frame 5 (Speed Index) - Centered -->
             <div class="feature-frame">
               <div class="frame-top">
                 <div class="frame-icon-squircle">🏎️</div>
