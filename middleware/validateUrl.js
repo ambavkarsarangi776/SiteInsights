@@ -26,6 +26,16 @@ function validateUrl(req, res, next) {
     url = `https://${url}`;
   }
 
+  // Reject URLs exceeding database field size (500 characters)
+  if (url.length > 500) {
+    return res.status(400).json({
+      error: {
+        code: 'INVALID_URL',
+        message: 'URL is too long (maximum 500 characters allowed).'
+      }
+    });
+  }
+
   // Validate URL structure using validator
   if (!validator.isURL(url, { require_protocol: true, protocols: ['http', 'https'] })) {
     return res.status(400).json({
