@@ -5,184 +5,235 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Performance Diagnosis - Website Speed Doctor</title>
   <link rel="stylesheet" href="css/style.css">
-  <!-- Chart.js via CDN per PRD Tech Stack -->
+  <!-- Chart.js via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <a href="index.html">⚡ Website <span>Speed Doctor</span></a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="learn.html">Learn</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="app-frame">
+    <div class="app-canvas">
+      <!-- Top Navigation Bar -->
+      <header class="navbar-wrapper">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="index.html">
+              <span class="logo-mark">⚡</span>
+              <span class="logo-text">SPEED<strong>DOCTOR</strong></span>
+            </a>
+          </div>
 
-  <main class="container">
-    <!-- Error banner if load fails -->
-    <div id="error-banner" class="error-banner hidden" role="alert">
-      <span>⚠️</span>
-      <span id="error-text">Failed to load report.</span>
+          <div class="nav-pill-menu">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="history.html" class="nav-item">History</a>
+            <div class="nav-center-squircle" title="Clinical Speed Engine">
+              <span>⚡</span>
+            </div>
+            <a href="learn.html" class="nav-item">Learn</a>
+            <a href="https://github.com/ambavkarsarangi776/speed_doctor" target="_blank" rel="noopener noreferrer" class="nav-item">Docs ↗</a>
+          </div>
+
+          <div class="nav-meta">
+            <span class="live-dot"></span>
+            <span id="nav-live-time">12:56 PM</span>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Main Container -->
+      <main class="container">
+        <!-- Error banner if load fails -->
+        <div id="error-banner" class="error-banner hidden" role="alert">
+          <span>⚠️</span>
+          <span id="error-text">Failed to load report.</span>
+        </div>
+
+        <!-- Loading skeleton -->
+        <div id="loading-state" class="loading-box">
+          <div class="spinner"></div>
+          <p class="loading-msg">Loading performance diagnosis...</p>
+          <p class="loading-sub">Analyzing audits, metrics, and prescriptions</p>
+        </div>
+
+        <!-- Main Report Container -->
+        <div id="report-content" class="hidden">
+          <!-- Site Overview Header -->
+          <section class="report-header">
+            <div class="site-meta">
+              <h2 id="report-url">https://example.com</h2>
+              <div class="site-badges">
+                <span id="badge-strategy" class="badge badge-mobile">📱 Mobile</span>
+                <span id="badge-cached" class="badge badge-cached hidden">Cached</span>
+                <span id="report-date">Just now</span>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button id="compare-btn" class="btn-secondary">⚡ Compare with Desktop</button>
+              <button id="print-btn" class="btn-secondary" onclick="window.print()">🖨️ Download PDF</button>
+              <a href="index.html" class="btn-secondary">← Scan Another</a>
+            </div>
+          </section>
+
+          <!-- Before / After Score Evolution Banner -->
+          <div id="before-after-banner" class="before-after-banner hidden">
+            <span class="banner-icon" id="ba-icon">📈</span>
+            <span class="banner-text" id="ba-text">Score improved from -- to --</span>
+          </div>
+
+          <!-- Strategy Comparison Box -->
+          <section id="compare-box" class="compare-card hidden">
+            <h3 class="compare-title">Strategy Comparison</h3>
+            <p class="compare-sub" id="compare-status">Analyzing performance on alternative device...</p>
+            <div id="compare-grid" class="compare-grid hidden">
+              <div class="compare-col" id="col-current">
+                <span class="compare-device" id="label-current">📱 Mobile</span>
+                <div class="compare-score" id="score-current">--</div>
+                <span class="badge" id="badge-current">--</span>
+              </div>
+              <div class="compare-vs">VS</div>
+              <div class="compare-col" id="col-other">
+                <span class="compare-device" id="label-other">💻 Desktop</span>
+                <div class="compare-score" id="score-other">--</div>
+                <span class="badge" id="badge-other">--</span>
+              </div>
+            </div>
+            <div id="compare-diff" class="compare-diff-pill hidden"></div>
+          </section>
+
+          <!-- Overall Performance Score Gauge -->
+          <section class="score-card">
+            <div class="gauge-wrapper">
+              <svg class="gauge-svg" viewBox="0 0 180 180">
+                <circle class="gauge-bg" cx="90" cy="90" r="75"></circle>
+                <circle id="gauge-bar" class="gauge-bar" cx="90" cy="90" r="75" stroke-dasharray="471.24" stroke-dashoffset="471.24" stroke="#16a34a"></circle>
+              </svg>
+              <div class="gauge-center">
+                <div id="score-number" class="gauge-score">--</div>
+                <div class="gauge-max">/ 100</div>
+              </div>
+            </div>
+            <h3 id="score-verdict" class="score-title">Health Verdict</h3>
+            <p id="score-summary" class="score-desc">Overall performance score calculated using Google Lighthouse audits.</p>
+          </section>
+
+          <!-- Horizontal Bar Chart: Metrics vs Thresholds -->
+          <section class="chart-section">
+            <div class="metrics-header-row">
+              <div class="dark-pill-tag">Benchmark</div>
+              <h3 class="section-title">Metrics vs. Good Thresholds</h3>
+            </div>
+            <div class="chart-card">
+              <div class="chart-container" style="position: relative; height: 260px; width: 100%;">
+                <canvas id="metrics-bar-chart"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- The 5 Metric Frames: Core Web Vitals Breakdown -->
+          <section class="metrics-section">
+            <div class="metrics-header-row">
+              <div class="dark-pill-tag">Core Vitals</div>
+              <h3 class="section-title">Core Web Vitals & Speed Breakdown</h3>
+            </div>
+            <div class="metrics-grid">
+              <!-- Frame 1: FCP -->
+              <div id="metric-fcp" class="metric-card">
+                <div class="metric-top">
+                  <div class="metric-icon-box">⏱️</div>
+                  <span class="metric-rating-pill" id="fcp-pill">--</span>
+                </div>
+                <div class="metric-name">First Contentful Paint (FCP)</div>
+                <div class="metric-value" id="fcp-value">--</div>
+                <p class="metric-desc">How fast the first text or image appears on screen.</p>
+                <div class="metric-threshold-tag">Good Target: ≤ 1,800 ms</div>
+              </div>
+
+              <!-- Frame 2: LCP -->
+              <div id="metric-lcp" class="metric-card">
+                <div class="metric-top">
+                  <div class="metric-icon-box">🖼️</div>
+                  <span class="metric-rating-pill" id="lcp-pill">--</span>
+                </div>
+                <div class="metric-name">Largest Contentful Paint (LCP)</div>
+                <div class="metric-value" id="lcp-value">--</div>
+                <p class="metric-desc">How long until the main content of the page is visible.</p>
+                <div class="metric-threshold-tag">Good Target: ≤ 2,500 ms</div>
+              </div>
+
+              <!-- Frame 3: TBT -->
+              <div id="metric-tbt" class="metric-card">
+                <div class="metric-top">
+                  <div class="metric-icon-box">🛑</div>
+                  <span class="metric-rating-pill" id="tbt-pill">--</span>
+                </div>
+                <div class="metric-name">Total Blocking Time (TBT)</div>
+                <div class="metric-value" id="tbt-value">--</div>
+                <p class="metric-desc">How long the page is unresponsive to visitor clicks and taps.</p>
+                <div class="metric-threshold-tag">Good Target: ≤ 200 ms</div>
+              </div>
+
+              <!-- Frame 4: CLS -->
+              <div id="metric-cls" class="metric-card">
+                <div class="metric-top">
+                  <div class="metric-icon-box">📐</div>
+                  <span class="metric-rating-pill" id="cls-pill">--</span>
+                </div>
+                <div class="metric-name">Cumulative Layout Shift (CLS)</div>
+                <div class="metric-value" id="cls-value">--</div>
+                <p class="metric-desc">How much page content unexpectedly shifts around during loading.</p>
+                <div class="metric-threshold-tag">Good Target: ≤ 0.100</div>
+              </div>
+
+              <!-- Frame 5: Speed Index -->
+              <div id="metric-speedIndex" class="metric-card">
+                <div class="metric-top">
+                  <div class="metric-icon-box">🏎️</div>
+                  <span class="metric-rating-pill" id="si-pill">--</span>
+                </div>
+                <div class="metric-name">Speed Index</div>
+                <div class="metric-value" id="si-value">--</div>
+                <p class="metric-desc">How quickly the visible parts of the page populate with content.</p>
+                <div class="metric-threshold-tag">Good Target: ≤ 3,400 ms</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Doctor's Prescriptions & Issues -->
+          <section class="issues-section">
+            <div class="metrics-header-row">
+              <div class="dark-pill-tag">Prescriptions</div>
+              <h3 class="section-title" id="issues-header">Doctor's Prescriptions (Issues to Fix)</h3>
+            </div>
+            <div id="issues-list" class="issues-list">
+              <!-- Dynamically populated issues -->
+            </div>
+          </section>
+
+          <!-- Bottom Action Row -->
+          <div class="actions-row">
+            <a href="index.html" class="btn-primary">Scan Another Website</a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
+      </footer>
     </div>
-
-    <!-- Loading skeleton -->
-    <div id="loading-state" class="loading-box">
-      <div class="spinner"></div>
-      <p class="loading-msg">Loading performance report...</p>
-    </div>
-
-    <!-- Main Report Container (hidden until loaded) -->
-    <div id="report-content" class="hidden">
-      <!-- Site Overview Header -->
-      <section class="report-header">
-        <div class="site-meta">
-          <h2 id="report-url">https://example.com</h2>
-          <div class="site-badges">
-            <span id="badge-strategy" class="badge badge-mobile">Mobile</span>
-            <span id="badge-cached" class="badge badge-cached hidden">Cached</span>
-            <span id="report-date">Just now</span>
-          </div>
-        </div>
-        <div class="header-actions">
-          <button id="compare-btn" class="btn-secondary">⚡ Compare with Desktop</button>
-          <button id="print-btn" class="btn-secondary" onclick="window.print()">🖨️ Download PDF</button>
-          <a href="index.html" class="btn-secondary">← Scan Another</a>
-        </div>
-      </section>
-
-      <!-- Before / After Score Evolution Banner (Task 1) -->
-      <div id="before-after-banner" class="before-after-banner hidden">
-        <span class="banner-icon" id="ba-icon">📈</span>
-        <span class="banner-text" id="ba-text">Score improved from -- to --</span>
-      </div>
-
-      <!-- Strategy Comparison Box (Side by side when compare is clicked) -->
-      <section id="compare-box" class="compare-card hidden">
-        <h3 class="compare-title">Strategy Comparison</h3>
-        <p class="compare-sub" id="compare-status">Analyzing performance on the alternative device...</p>
-        <div id="compare-grid" class="compare-grid hidden">
-          <div class="compare-col" id="col-current">
-            <span class="compare-device" id="label-current">📱 Mobile</span>
-            <div class="compare-score" id="score-current">--</div>
-            <span class="badge" id="badge-current">--</span>
-          </div>
-          <div class="compare-vs">VS</div>
-          <div class="compare-col" id="col-other">
-            <span class="compare-device" id="label-other">💻 Desktop</span>
-            <div class="compare-score" id="score-other">--</div>
-            <span class="badge" id="badge-other">--</span>
-          </div>
-        </div>
-        <div id="compare-diff" class="compare-diff-pill hidden"></div>
-      </section>
-
-      <!-- Overall Performance Score Gauge -->
-      <section class="score-card">
-        <div class="gauge-wrapper">
-          <svg class="gauge-svg" viewBox="0 0 180 180">
-            <circle class="gauge-bg" cx="90" cy="90" r="75"></circle>
-            <circle id="gauge-bar" class="gauge-bar" cx="90" cy="90" r="75" stroke-dasharray="471.24" stroke-dashoffset="471.24" stroke="#16a34a"></circle>
-          </svg>
-          <div class="gauge-center">
-            <div id="score-number" class="gauge-score">--</div>
-            <div class="gauge-max">/ 100</div>
-          </div>
-        </div>
-        <h3 id="score-verdict" class="score-title">Health Verdict</h3>
-        <p id="score-summary" class="score-desc">Overall performance score calculated using Google Lighthouse audits.</p>
-      </section>
-
-      <!-- Horizontal Bar Chart: Metrics vs Thresholds -->
-      <section class="chart-section">
-        <h3 class="section-title">Metrics vs. Good Thresholds</h3>
-        <div class="chart-card">
-          <div class="chart-container" style="position: relative; height: 260px; width: 100%;">
-            <canvas id="metrics-bar-chart"></canvas>
-          </div>
-        </div>
-      </section>
-
-      <!-- Core Web Vitals Metrics Grid -->
-      <section class="metrics-section">
-        <h3 class="section-title">Core Web Vitals & Metrics Breakdown</h3>
-        <div class="metrics-grid">
-          <!-- FCP -->
-          <div id="metric-fcp" class="metric-card">
-            <div class="metric-top">
-              <span class="metric-name">First Contentful Paint (FCP)</span>
-              <span class="metric-rating-pill" id="fcp-pill">--</span>
-            </div>
-            <div class="metric-value" id="fcp-value">--</div>
-            <p class="metric-desc">How fast the first text or image appears on screen.</p>
-          </div>
-
-          <!-- LCP -->
-          <div id="metric-lcp" class="metric-card">
-            <div class="metric-top">
-              <span class="metric-name">Largest Contentful Paint (LCP)</span>
-              <span class="metric-rating-pill" id="lcp-pill">--</span>
-            </div>
-            <div class="metric-value" id="lcp-value">--</div>
-            <p class="metric-desc">How long until the main content of the page is visible.</p>
-          </div>
-
-          <!-- TBT -->
-          <div id="metric-tbt" class="metric-card">
-            <div class="metric-top">
-              <span class="metric-name">Total Blocking Time (TBT)</span>
-              <span class="metric-rating-pill" id="tbt-pill">--</span>
-            </div>
-            <div class="metric-value" id="tbt-value">--</div>
-            <p class="metric-desc">How long the page is unresponsive to visitor clicks and taps.</p>
-          </div>
-
-          <!-- CLS -->
-          <div id="metric-cls" class="metric-card">
-            <div class="metric-top">
-              <span class="metric-name">Cumulative Layout Shift (CLS)</span>
-              <span class="metric-rating-pill" id="cls-pill">--</span>
-            </div>
-            <div class="metric-value" id="cls-value">--</div>
-            <p class="metric-desc">How much page content unexpectedly shifts around during loading.</p>
-          </div>
-
-          <!-- Speed Index -->
-          <div id="metric-speedIndex" class="metric-card">
-            <div class="metric-top">
-              <span class="metric-name">Speed Index</span>
-              <span class="metric-rating-pill" id="si-pill">--</span>
-            </div>
-            <div class="metric-value" id="si-value">--</div>
-            <p class="metric-desc">How quickly the visible parts of the page populate with content.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Doctor's Prescriptions & Issues -->
-      <section class="issues-section">
-        <h3 class="section-title" id="issues-header">Doctor's Prescriptions (Issues to Fix)</h3>
-        <div id="issues-list" class="issues-list">
-          <!-- Dynamically populated issues -->
-        </div>
-      </section>
-
-      <!-- Bottom action button -->
-      <div class="actions-row">
-        <a href="index.html" class="btn-primary">Scan Another Website</a>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
-  </footer>
+  </div>
 
   <script src="js/api.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/results.js"></script>
+  <script>
+    function updateClock() {
+      const el = document.getElementById('nav-live-time');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 </body>
 </html>

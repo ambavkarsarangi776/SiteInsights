@@ -9,112 +9,158 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <a href="index.html">⚡ Website <span>Speed Doctor</span></a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="history.html" class="active">History</a></li>
-        <li><a href="learn.html">Learn</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <h1>Scan History & Performance Trends</h1>
-      <p class="subtitle">Browse past website scans and monitor how speed scores evolve over time.</p>
-    </section>
-
-    <!-- Error message alert -->
-    <div id="error-banner" class="error-banner hidden" role="alert">
-      <span>⚠️</span>
-      <span id="error-text">Failed to load history data.</span>
-    </div>
-
-    <!-- Loading State -->
-    <div id="loading-state" class="loading-box">
-      <div class="spinner"></div>
-      <p class="loading-msg">Loading analyzed sites...</p>
-    </div>
-
-    <!-- Empty State -->
-    <div id="empty-state" class="empty-state hidden">
-      <h3>No Scans Found Yet</h3>
-      <p style="margin-bottom: 1.5rem;">You haven't scanned any websites yet. Enter a website URL on the home page to diagnose its speed!</p>
-      <a href="index.html" class="btn-primary">Scan Your First Website</a>
-    </div>
-
-    <!-- Main Content (Sites list & Trend details) -->
-    <div id="history-content" class="hidden">
-      <!-- Sites Table -->
-      <section class="history-table-card">
-        <h3 class="section-title">Analyzed Websites</h3>
-        <p class="table-sub">Click any site to view its score trend chart and past reports.</p>
-        <div class="table-responsive">
-          <table class="data-table" id="sites-table">
-            <thead>
-              <tr>
-                <th>Website URL</th>
-                <th>Total Scans</th>
-                <th>Latest Score</th>
-                <th>Last Scan Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="sites-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Selected Site Details & Score Trend Chart -->
-      <section id="site-detail-section" class="site-detail-card hidden">
-        <div class="detail-header">
-          <div>
-            <h3 id="selected-site-title">Score Trend</h3>
-            <p id="selected-site-sub" class="text-muted">Performance history over time</p>
+  <div class="app-frame">
+    <div class="app-canvas">
+      <!-- Top Navigation Bar -->
+      <header class="navbar-wrapper">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="index.html">
+              <span class="logo-mark">⚡</span>
+              <span class="logo-text">SPEED<strong>DOCTOR</strong></span>
+            </a>
           </div>
-          <button id="close-detail-btn" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">✕ Close Trend</button>
+
+          <div class="nav-pill-menu">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="history.html" class="nav-item active">History</a>
+            <div class="nav-center-squircle" title="Clinical Speed Engine">
+              <span>⚡</span>
+            </div>
+            <a href="learn.html" class="nav-item">Learn</a>
+            <a href="https://github.com/ambavkarsarangi776/speed_doctor" target="_blank" rel="noopener noreferrer" class="nav-item">Docs ↗</a>
+          </div>
+
+          <div class="nav-meta">
+            <span class="live-dot"></span>
+            <span id="nav-live-time">12:56 PM</span>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Main Container -->
+      <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="hero-badge">
+            <span class="badge-sparkle">✦</span> Historical Telemetry
+          </div>
+          <h1 class="hero-title">
+            Website scan history &<br>
+            performance <span class="hero-inline-badge">📈</span> trends.
+          </h1>
+          <p class="hero-subtitle">
+            Track how optimization efforts impact your website speed over time. Click any site to view historical score progression.
+          </p>
+        </section>
+
+        <!-- Error message alert -->
+        <div id="error-banner" class="error-banner hidden" role="alert">
+          <span>⚠️</span>
+          <span id="error-text">Failed to load history data.</span>
         </div>
 
-        <!-- Trend Line Chart -->
-        <div class="chart-container" style="position: relative; height: 300px; width: 100%; margin-bottom: 2rem;">
-          <canvas id="score-trend-chart"></canvas>
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-box">
+          <div class="spinner"></div>
+          <p class="loading-msg">Loading analyzed sites...</p>
         </div>
 
-        <!-- Past Scans Table -->
-        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;">Past Scan Reports</h4>
-        <div class="table-responsive">
-          <table class="data-table" id="scans-table">
-            <thead>
-              <tr>
-                <th>Scan ID</th>
-                <th>Device Strategy</th>
-                <th>Score</th>
-                <th>LCP</th>
-                <th>Date & Time</th>
-                <th>Report</th>
-              </tr>
-            </thead>
-            <tbody id="scans-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+          <h3>No Scans Found Yet</h3>
+          <p style="margin-bottom: 1.5rem;">You haven't scanned any websites yet. Enter a website URL on the home page to diagnose its speed!</p>
+          <a href="index.html" class="btn-primary">Scan Your First Website</a>
         </div>
-      </section>
+
+        <!-- Main Content -->
+        <div id="history-content" class="hidden">
+          <!-- Sites Table -->
+          <section class="history-table-card">
+            <div class="metrics-header-row">
+              <div class="dark-pill-tag">Database</div>
+              <h3 class="section-title">Analyzed Websites</h3>
+            </div>
+            <p class="table-sub">Click any site row below to view its score trend chart and past reports.</p>
+            <div class="table-responsive">
+              <table class="data-table" id="sites-table">
+                <thead>
+                  <tr>
+                    <th>Website URL</th>
+                    <th>Total Scans</th>
+                    <th>Latest Score</th>
+                    <th>Last Scan Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="sites-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Selected Site Details & Score Trend Chart -->
+          <section id="site-detail-section" class="site-detail-card hidden">
+            <div class="detail-header">
+              <div>
+                <h3 id="selected-site-title">Score Trend</h3>
+                <p id="selected-site-sub" class="text-muted">Performance history over time</p>
+              </div>
+              <button id="close-detail-btn" class="btn-secondary btn-sm">✕ Close Trend</button>
+            </div>
+
+            <!-- Trend Line Chart -->
+            <div class="chart-container" style="position: relative; height: 300px; width: 100%; margin-bottom: 2rem;">
+              <canvas id="score-trend-chart"></canvas>
+            </div>
+
+            <!-- Past Scans Table -->
+            <div class="metrics-header-row" style="margin-top: 1.5rem;">
+              <div class="dark-pill-tag">Scans</div>
+              <h4 style="font-size: 1.25rem; font-weight: 800;">Past Scan Reports</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="scans-table">
+                <thead>
+                  <tr>
+                    <th>Scan ID</th>
+                    <th>Strategy</th>
+                    <th>Score</th>
+                    <th>LCP</th>
+                    <th>Date & Time</th>
+                    <th>Report</th>
+                  </tr>
+                </thead>
+                <tbody id="scans-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
+      </footer>
     </div>
-  </main>
-
-  <footer>
-    <p>Website Speed Doctor &bull; Built with Node.js, Express, MySQL & Google PageSpeed API</p>
-  </footer>
+  </div>
 
   <script src="js/api.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/history.js"></script>
+  <script>
+    function updateClock() {
+      const el = document.getElementById('nav-live-time');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 </body>
 </html>
