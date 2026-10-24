@@ -397,6 +397,11 @@ body {
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.06);
 }
 
+/* Universal Visibility Utility */
+.hidden {
+  display: none !important;
+}
+
 .error-banner.hidden {
   display: none !important;
 }
