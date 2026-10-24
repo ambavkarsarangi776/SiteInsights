@@ -942,3 +942,126 @@ footer {
     padding: 1.25rem;
   }
 }
+
+/* --- Before / After Score Banner (Phase 7) --- */
+.before-after-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: 1.5px solid var(--border-color);
+  animation: fadeIn 0.4s ease-in;
+}
+
+.before-after-banner.good {
+  background-color: var(--score-good-bg);
+  color: var(--score-good);
+  border-color: #86efac;
+}
+
+.before-after-banner.poor {
+  background-color: var(--score-poor-bg);
+  color: var(--score-poor);
+  border-color: #fca5a5;
+}
+
+.before-after-banner.neutral {
+  background-color: #f8fafc;
+  color: var(--text-secondary);
+  border-color: #cbd5e1;
+}
+
+.before-after-banner.hidden {
+  display: none;
+}
+
+.banner-icon {
+  font-size: 1.3rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Print & PDF Stylesheet (Phase 7) --- */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Hide interactive elements when printing or downloading PDF */
+  .navbar,
+  footer,
+  .header-actions,
+  .actions-row,
+  .compare-card,
+  #error-banner,
+  #loading-state,
+  .btn-primary,
+  .btn-secondary {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .report-header,
+  .score-card,
+  .metric-card,
+  .issue-card,
+  .chart-card {
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .report-header {
+    margin-bottom: 1rem !important;
+  }
+
+  .score-card {
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .metric-card {
+    padding: 1rem !important;
+  }
+
+  .issue-card {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .tip-example code {
+    background-color: #f8fafc !important;
+    color: #000000 !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* Add print header watermark */
+  .report-header::before {
+    content: "⚡ Website Speed Doctor - Official Performance Diagnosis";
+    display: block;
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
