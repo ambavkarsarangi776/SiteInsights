@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Speed Doctor</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">⚡ Website Speed Doctor</div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="learn.html">Learn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Website Speed Doctor</h1>
+      <p class="subtitle">Get a plain-English performance diagnosis and prescriptions for your website.</p>
+    </section>
+
+    <section class="scan-section">
+      <form id="scan-form" class="scan-form">
+        <div class="input-group">
+          <input 
+            type="url" 
+            id="url-input" 
+            name="url" 
+            placeholder="https://example.com" 
+            required
+          >
+          <button type="submit" id="analyze-btn" class="btn-primary">Analyze</button>
+        </div>
+
+        <div class="strategy-options">
+          <label class="radio-label">
+            <input type="radio" name="strategy" value="mobile" checked>
+            Mobile
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="strategy" value="desktop">
+            Desktop
+          </label>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
