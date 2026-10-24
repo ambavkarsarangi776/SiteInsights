@@ -1,12 +1,13 @@
 /**
- * Results page report renderer.
- * Reads scan ID from query parameter and populates gauge, metric cards, and issues.
+ * Results page report renderer with Chart.js and Strategy Comparison.
  */
 
 const loadingState = document.getElementById('loading-state');
 const reportContent = document.getElementById('report-content');
 const errorBanner = document.getElementById('error-banner');
 const errorText = document.getElementById('error-text');
+
+let currentReport = null;
 
 function showError(msg) {
   loadingState.classList.add('hidden');
@@ -46,15 +47,17 @@ function formatDate(isoDate) {
 }
 
 function renderReport(report) {
+  currentReport = report;
   loadingState.classList.add('hidden');
   reportContent.classList.remove('hidden');
 
   // URL & Metadata
   document.getElementById('report-url').textContent = report.url || 'Website Performance';
   
+  const strategy = report.strategy || 'mobile';
   const strategyBadge = document.getElementById('badge-strategy');
-  strategyBadge.textContent = report.strategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
-  strategyBadge.className = `badge badge-${report.strategy || 'mobile'}`;
+  strategyBadge.textContent = strategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+  strategyBadge.className = `badge badge-${strategy}`;
 
   const cachedBadge = document.getElementById('badge-cached');
   if (report.cached) {
@@ -64,6 +67,12 @@ function renderReport(report) {
   }
 
   document.getElementById('report-date').textContent = formatDate(report.createdAt);
+
+  // Setup Compare Strategy Button
+  const compareBtn = document.getElementById('compare-btn');
+  const targetOther = strategy === 'mobile' ? 'desktop' : 'mobile';
+  compareBtn.textContent = `⚡ Compare with ${targetOther === 'desktop' ? 'Desktop' : 'Mobile'}`;
+  compareBtn.onclick = () => runStrategyComparison(targetOther);
 
   // Score Gauge
   const score = Math.max(0, Math.min(100, Math.round(report.score || 0)));
@@ -97,6 +106,15 @@ function renderReport(report) {
   document.getElementById('score-verdict').textContent = verdict;
   document.getElementById('score-verdict').style.color = scoreColor;
   document.getElementById('score-summary').textContent = summary;
+
+  // Render Horizontal Bar Chart (Task 1)
+  try {
+    if (typeof renderMetricsBarChart === 'function') {
+      renderMetricsBarChart('metrics-bar-chart', report.metrics);
+    }
+  } catch (chartErr) {
+    console.warn('Metrics chart error:', chartErr.message);
+  }
 
   // Render 5 Metric Cards
   const metrics = report.metrics || {};
@@ -179,6 +197,68 @@ function renderReport(report) {
 
     issuesList.appendChild(card);
   });
+}
+
+/**
+ * Executes comparison scan for the alternative strategy (Task 4)
+ */
+async function runStrategyComparison(otherStrategy) {
+  if (!currentReport || !currentReport.url) return;
+
+  const compareBtn = document.getElementById('compare-btn');
+  const compareBox = document.getElementById('compare-box');
+  const compareStatus = document.getElementById('compare-status');
+  const compareGrid = document.getElementById('compare-grid');
+  const compareDiff = document.getElementById('compare-diff');
+
+  compareBox.classList.remove('hidden');
+  compareGrid.classList.add('hidden');
+  compareDiff.classList.add('hidden');
+  compareStatus.textContent = `Scanning ${otherStrategy === 'desktop' ? 'Desktop' : 'Mobile'} version (takes ~15-25 seconds)...`;
+  compareBtn.disabled = true;
+
+  try {
+    const otherReport = await apiScan(currentReport.url, otherStrategy);
+
+    // Populate current vs other
+    const curScore = Math.round(currentReport.score || 0);
+    const othScore = Math.round(otherReport.score || 0);
+    const curStrat = currentReport.strategy || 'mobile';
+
+    document.getElementById('label-current').textContent = curStrat === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+    document.getElementById('score-current').textContent = curScore;
+    const badgeCur = document.getElementById('badge-current');
+    badgeCur.textContent = formatRatingText(currentReport.rating);
+    badgeCur.className = `badge ${currentReport.rating}`;
+
+    document.getElementById('label-other').textContent = otherStrategy === 'desktop' ? '💻 Desktop' : '📱 Mobile';
+    document.getElementById('score-other').textContent = othScore;
+    const badgeOth = document.getElementById('badge-other');
+    badgeOth.textContent = formatRatingText(otherReport.rating);
+    badgeOth.className = `badge ${otherReport.rating}`;
+
+    // Calculate score difference
+    const diff = othScore - curScore;
+    const otherName = otherStrategy === 'desktop' ? 'Desktop' : 'Mobile';
+    if (diff > 0) {
+      compareDiff.textContent = `📈 ${otherName} score is +${diff} points higher`;
+      compareDiff.className = 'compare-diff-pill good';
+    } else if (diff < 0) {
+      compareDiff.textContent = `📉 ${otherName} score is ${diff} points lower`;
+      compareDiff.className = 'compare-diff-pill poor';
+    } else {
+      compareDiff.textContent = `⚖️ Both Mobile and Desktop scored the same (${curScore}/100)`;
+      compareDiff.className = 'compare-diff-pill neutral';
+    }
+
+    compareStatus.textContent = 'Side-by-side comparison complete:';
+    compareGrid.classList.remove('hidden');
+    compareDiff.classList.remove('hidden');
+    compareBtn.textContent = '✓ Compared';
+  } catch (err) {
+    compareStatus.textContent = `Could not complete comparison: ${err.message}`;
+    compareBtn.disabled = false;
+  }
 }
 
 function escapeHtml(str) {
