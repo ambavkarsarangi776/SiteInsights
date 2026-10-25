@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS sight_insights;
-USE sight_insights;
+CREATE DATABASE IF NOT EXISTS site_insights;
+USE site_insights;
 
 CREATE TABLE IF NOT EXISTS sites (
   id INT AUTO_INCREMENT PRIMARY KEY,

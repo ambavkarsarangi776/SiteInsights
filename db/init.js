@@ -7,7 +7,7 @@ async function initDatabase() {
   const host = process.env.DB_HOST || 'localhost';
   const user = process.env.DB_USER || 'root';
   const password = process.env.DB_PASSWORD || '';
-  const dbName = process.env.DB_NAME || 'sight_insights';
+  const dbName = process.env.DB_NAME || 'site_insights';
 
   console.log(`Connecting to MySQL on ${host} as user '${user}'...`);
 
@@ -59,35 +59,50 @@ async function initDatabase() {
     `);
     console.log('Table "scans" verified/created.');
 
-    // 6. Optional: import data from local_history.json if MySQL tables are empty
+    // 6. Sync any scans from local_history.json that aren't in MySQL yet
     const localHistoryPath = path.join(__dirname, '../data/local_history.json');
     if (fs.existsSync(localHistoryPath)) {
-      const [existingScans] = await connection.query('SELECT COUNT(*) as count FROM scans');
-      if (existingScans[0].count === 0) {
-        try {
-          const raw = fs.readFileSync(localHistoryPath, 'utf8');
-          const localStore = JSON.parse(raw);
-          if (localStore.scans && localStore.scans.length > 0) {
-            console.log(`Migrating ${localStore.scans.length} historical scans from local JSON store into MySQL...`);
-            
-            // Map to track site id mapping
-            const siteMap = {};
+      try {
+        const raw = fs.readFileSync(localHistoryPath, 'utf8');
+        const localStore = JSON.parse(raw);
+        if (localStore.scans && localStore.scans.length > 0) {
+          console.log(`Syncing historical scans from local JSON store into MySQL...`);
+          
+          const siteMap = {};
+          let importedCount = 0;
 
-            // Sort scans chronologically (oldest to newest) for migration
-            const sortedScans = [...localStore.scans].sort(
-              (a, b) => new Date(a.created_at) - new Date(b.created_at)
+          // Fetch existing sites
+          const [existingSites] = await connection.query('SELECT id, url FROM sites');
+          for (const s of existingSites) {
+            siteMap[s.url] = s.id;
+          }
+
+          // Sort scans chronologically (oldest to newest)
+          const sortedScans = [...localStore.scans].sort(
+            (a, b) => new Date(a.created_at) - new Date(b.created_at)
+          );
+
+          for (const s of sortedScans) {
+            if (!siteMap[s.url]) {
+              const [siteRes] = await connection.query(
+                'INSERT INTO sites (url) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)',
+                [s.url]
+              );
+              siteMap[s.url] = siteRes.insertId;
+            }
+
+            const siteId = siteMap[s.url];
+            const scanDate = s.created_at ? new Date(s.created_at) : new Date();
+
+            // Check if scan already exists by site and approximate time (within 2 seconds)
+            const [exists] = await connection.query(
+              `SELECT id FROM scans 
+               WHERE site_id = ? AND strategy = ? AND score = ? 
+               AND ABS(TIMESTAMPDIFF(SECOND, created_at, ?)) <= 2`,
+              [siteId, s.strategy || 'mobile', s.score || 0, scanDate]
             );
 
-            for (const s of sortedScans) {
-              if (!siteMap[s.url]) {
-                const [siteRes] = await connection.query(
-                  'INSERT INTO sites (url) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)',
-                  [s.url]
-                );
-                siteMap[s.url] = siteRes.insertId;
-              }
-
-              const siteId = siteMap[s.url];
+            if (!exists || exists.length === 0) {
               await connection.query(
                 `INSERT INTO scans (
                   site_id, strategy, score, fcp_ms, lcp_ms, tbt_ms, cls, speed_index_ms, total_bytes, issues_json, created_at
@@ -103,19 +118,20 @@ async function initDatabase() {
                   s.speed_index_ms || 0,
                   s.total_bytes || 0,
                   JSON.stringify(s.issues || []),
-                  s.created_at ? new Date(s.created_at) : new Date()
+                  scanDate
                 ]
               );
+              importedCount++;
             }
-            console.log(`Successfully imported ${sortedScans.length} scans into MySQL!`);
           }
-        } catch (migErr) {
-          console.warn('Local scan migration notice:', migErr.message);
+          console.log(`Synced ${importedCount} scans into MySQL tables!`);
         }
+      } catch (migErr) {
+        console.warn('Scan sync notice:', migErr.message);
       }
     }
 
-    console.log('\nSUCCESS! Database setup completed successfully.');
+    console.log('\nSUCCESS! Database setup and synchronization completed successfully.');
   } catch (err) {
     console.error('\nDatabase initialization failed:');
     console.error(err.message);
