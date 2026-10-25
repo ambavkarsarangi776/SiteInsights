@@ -1,5 +1,5 @@
 {
-  "name": "site-insight",
+  "name": "site-insights",
   "version": "1.0.0",
   "description": "SiteInsight - plain-English website performance reports powered by PageSpeed Insights",
   "main": "server.js",
