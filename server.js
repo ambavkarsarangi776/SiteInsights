@@ -7,7 +7,7 @@ const cors = require('cors');
 require('./config/db');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -29,9 +29,11 @@ app.use('/api', historyRoutes);
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`SiteInsight server running on port ${PORT}`);
-});
+// Start server when run directly (local development)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`SiteInsight server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;

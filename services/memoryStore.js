@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { getRating, getScoreRating } = require('./parser');
 
-const dataDir = path.join(__dirname, '../data');
-const dataFilePath = path.join(dataDir, 'local_history.json');
+const isVercel = !!process.env.VERCEL;
+const bundledDataFilePath = path.join(__dirname, '../data/local_history.json');
+const dataDir = isVercel ? '/tmp' : path.join(__dirname, '../data');
+const dataFilePath = isVercel ? path.join('/tmp', 'local_history.json') : bundledDataFilePath;
 
 // Ensure data directory exists
 if (!fs.existsSync(dataDir)) {
@@ -18,10 +20,14 @@ let store = {
   scans: []  // array of scan objects
 };
 
-// Load existing data from file if available
+// Load existing data from file if available (prefers active file, falls back to bundled)
 try {
-  if (fs.existsSync(dataFilePath)) {
-    const raw = fs.readFileSync(dataFilePath, 'utf8');
+  const sourcePath = fs.existsSync(dataFilePath)
+    ? dataFilePath
+    : (fs.existsSync(bundledDataFilePath) ? bundledDataFilePath : null);
+
+  if (sourcePath) {
+    const raw = fs.readFileSync(sourcePath, 'utf8');
     const parsed = JSON.parse(raw);
     if (parsed && Array.isArray(parsed.scans)) {
       store = parsed;

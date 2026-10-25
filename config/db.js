@@ -8,7 +8,8 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME || 'site_insights',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  connectTimeout: 4000
 });
 
 // Test connection on startup and log on success
